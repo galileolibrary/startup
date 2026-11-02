@@ -4186,9 +4186,8 @@ window.SITE = {
   var SECTIONS={
    problem:{title:"Problem / Opportunity",
     prompts:[
-     {id:"who",label:"Who has the problem or opportunity?",ph:"example: high school students who lose their keys"},
-     {id:"what",label:"What happens to them, and how often?",ph:"example: they lose them twice a month and pay $20 to replace"},
-     {id:"where",label:"Where or when does it happen?",ph:"example: at school, on the bus, in San Francisco"}],
+     {id:"who",label:"Who has the problem or opportunity?",ph:"example: high school students, or small cafe owners"},
+     {id:"what",label:"What is the problem or opportunity, in a sentence?",ph:"example: they lose their keys and pay to replace them"}],
     base:[
      {q:"How big is the group that has this problem in your area?",t:ACS,m:"Stat tiles > Population, Households, and the matching Age groups card",e:"There are about ___ people in ___ who ___.",l:"Total population is not the same as people with your problem. Say how you estimated the share."}],
     primary:[
@@ -4196,9 +4195,8 @@ window.SITE = {
      {q:"How common is it among people like your customers?",t:PRI,m:"Surveys: ask 15 to 30 people one yes or no question and one how often question",e:"___ out of ___ people said they ___, which is ___%.",l:"Name who you asked. Friends are not the whole city."}]},
    target:{title:"Target Market",
     prompts:[
-     {id:"who",label:"Describe your main customer in one sentence.",ph:"example: a high school junior who commutes by bus"},
-     {id:"buy",label:"What would they buy from you, and about how much?",ph:"example: a $12 keychain tracker"},
-     {id:"where",label:"Where would you reach them?",ph:"example: Instagram and school fairs in the Sunset"}],
+     {id:"who",label:"Who is your main customer?",ph:"example: high school students, or parents of toddlers"},
+     {id:"buy",label:"What would they buy from you?",ph:"example: a keychain tracker, a tutoring session, a phone app"}],
     base:[
      {q:"How many people fit your customer description in your area?",t:ACS,m:"Choose a neighborhood in Geographics & Demographics, then use the Age groups and Household income & poverty cards",e:"There are about ___ people in ___ who are ___. If ___% buy, that is ___ customers.",l:"Turn percentages into numbers: percent times population. Teachers asked for numbers."},
      {q:"Do they have money to spend on this?",t:BUY,m:"Consumer spending (BLS CEX): pick the category closest to your product, compare by age or income",e:"A household like my customer spends $___ a year on ___.",l:"CEX groups by household, and age and income groups are U.S. wide."}],
@@ -4208,8 +4206,7 @@ window.SITE = {
    competitive:{title:"Competitive Analysis",
     prompts:[
      {id:"what",label:"What are you selling, in a few words?",ph:"example: bubble tea, tutoring, a phone app"},
-     {id:"alt",label:"What do customers do today instead?",ph:"example: buy from a corner store, use a free app, do nothing"},
-     {id:"diff",label:"What will you do differently?",ph:"example: lower price, student discounts, faster"}],
+     {id:"alt",label:"What do customers use or do instead today?",ph:"example: buy from a corner store, use a free app, do nothing"}],
     base:[
      {q:"How many businesses already do something like this near your customers?",t:BUY,m:"Business landscape: pick the closest category below, then compare Bay Area, California, and National counts",e:"There are ___ establishments in the Bay Area, so competition is ___.",l:"Counts businesses with locations. They do not show how busy each is or what they charge."},
      {q:"What do competitors charge?",t:PRC,m:"Pricing & Costs: record 3 to 5 competitor prices from store pages or in person",e:"Competitors charge $___ to $___, so I will charge $___.",l:"Prices change. Write down the date."}],
