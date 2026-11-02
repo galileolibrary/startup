@@ -771,6 +771,26 @@
   .bp-blocks{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; margin-bottom: 18px; }
   @media (max-width: 700px){ .bp-blocks{ grid-template-columns: 1fr; } }
   .bp-block{ background: var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; }
+
+  .fd{ background: var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; margin:20px 0; }
+  .fd-form{ display:flex; flex-direction:column; gap:8px; }
+  .fd-lab{ font-weight:600; font-size:14px; margin-top:6px; }
+  .fd-in{ width:100%; box-sizing:border-box; font:inherit; font-size:15px; padding:8px 10px; border:1px solid var(--border-strong); border-radius:8px; background: var(--bg); color: var(--ink); }
+  .fd-btns{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+  .fd-h4{ font-size:16px; margin:18px 0 8px; }
+  .fd-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; }
+  .fd-card{ border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:8px; padding:10px 12px; background: var(--bg); }
+  .fd-q{ font-weight:700; margin-bottom:6px; }
+  .fd-row{ display:grid; grid-template-columns:84px minmax(0,1fr); gap:8px; font-size:14px; line-height:1.5; margin-top:4px; }
+  .fd-lbl{ font-size:12px; text-transform:uppercase; letter-spacing:.06em; color: var(--muted, var(--ink)); opacity:.8; padding-top:2px; }
+  .fd-eg{ font-style:italic; }
+  .fd-note{ border:1px dashed var(--border-strong); border-radius:8px; padding:10px 12px; margin:10px 0; font-size:14px; line-height:1.5; }
+  .fd-small, .fd-warn{ font-size:13px; line-height:1.5; }
+  .fd-cats{ list-style:none; padding:0; margin:8px 0; display:flex; flex-wrap:wrap; gap:8px; }
+  .fd-cats li{ border:1px solid var(--border-strong); border-radius:999px; padding:4px 12px; font-size:14px; }
+  .fd-code{ font-size:12px; opacity:.75; margin-left:4px; }
+  .fd-naics{ margin-top:22px; padding-top:6px; border-top:1px solid var(--border); }
+  @media (max-width:520px){ .fd-row{ grid-template-columns:minmax(0,1fr); gap:0; } }
   .bp-chips{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px; }
   .bp-chip{ font-family: var(--font-body); font-size:13px; font-weight:600; padding:6px 12px; border-radius:999px; border:1px solid var(--border-strong); background: var(--surface); color: var(--ink); cursor:pointer; }
   .bp-chip:hover{ border-color: var(--accent); }
@@ -3856,6 +3876,7 @@ window.SITE = {
       + '<section><h3 class="section-title">Example: weak vs. strong</h3><p class="section-sub">'+esc(S.exampleNote)+'</p>'
       + '<div class="bp-compare"><div class="bp-ex weak"><div class="bp-label">Weak</div>'+lines(s.weak)+'</div>'
       + '<div class="bp-ex strong"><div class="bp-label">Strong</div>'+lines(s.strong)+'</div></div></section>'
+      + '<div id="finderHost"></div>'
       + resHtml
       + ev
       + '<div class="bp-prevnext">'
@@ -4072,7 +4093,7 @@ window.SITE = {
   var PANELS = ["tab-home","tab-step","tab-research","tab-acs","tab-psychographics","tab-buying","tab-page","tab-missions","tab-games"];
   function show(route){
     var panel, nav = "home";
-    if(route in stepIdx){ panel="tab-step"; renderStep(route); }
+    if(route in stepIdx){ panel="tab-step"; renderStep(route); if(window.renderFinder){ try{ window.renderFinder(route); }catch(e){} } }
     else if(route.indexOf("missions")===0){ panel="tab-missions"; nav="missions"; if(window.renderMissions){ window.renderMissions(route.split("-").slice(1)); } }
     else if(route.indexOf("games")===0){ panel="tab-games"; nav="games"; if(window.renderGames){ window.renderGames(route.split("-").slice(1)); } }
     else if(route==="research"){ panel="tab-research"; nav="research"; $("researchSub").innerHTML = subnav("research"); }
@@ -4110,4 +4131,249 @@ window.SITE = {
 </script>
 
 
+<script id="finderScript">
+(function(){
+  "use strict";
+  function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+  var ACS="acs", PSY="psychographics", BUY="buying", PRI="primary", PRC="pricing";
+  var TOOLN={acs:"Geographics & Demographics",psychographics:"Psychographics",buying:"Business Landscape",primary:"Primary Research",pricing:"Pricing & Costs"};
+
+  // ---- keyword rules: each maps words in the student's text to things worth looking up
+  var RULES=[
+   {k:/teen|student|high school|school|young|youth|kid|child|college|gen z|pocket money|allowance/, L:[
+     {q:"How many young people live in the area, and how many households have children?",t:ACS,m:"Demographics > Age groups (Under 18, 18 to 24) and Household income & poverty > Has children under 18",e:"Under 18 is ___% of people in ___ compared with ___% nationally.",l:"Counts people who live in an area, not how many have your problem."}]},
+   {k:/parent|baby|babies|toddler|family|families|mom|dad|childcare|daycare/, L:[
+     {q:"How common are households with children where you plan to sell?",t:ACS,m:"Demographics > Household income & poverty > Has children under 18",e:"Only ___% of households in San Francisco have children under 18, versus ___% nationally.",l:"San Francisco is far below the national share, so check whether your parents are common enough here."}]},
+   {k:/senior|elder|older|grandparent|retire|aging|aged/, L:[
+     {q:"How many people are 65 or older, and how many have a disability or no computer?",t:ACS,m:"Age groups > 65 and older; Disability & health insurance; Business Landscape tools > Household tech & vehicles > Has a computer",e:"___% of residents are 65 and older, and ___% of households have no computer.",l:"Averages hide big differences between neighborhoods. Compare two."}]},
+   {k:/afford|cheap|budget|low.?income|poor|poverty|save money|expensive|cost too much|free/, L:[
+     {q:"How many households have low income or live below the poverty line?",t:ACS,m:"Demographics > Household income & poverty > Under $50,000 and Below the poverty line",e:"___% of households earn under $50,000, which means ___.",l:"Income is a household number. It does not say what any one person can spend."}]},
+   {k:/luxury|premium|rich|wealthy|high.?end|designer|invest/, L:[
+     {q:"How many households could afford a higher price?",t:ACS,m:"Household income & poverty > $100,000 or more; Median household income tile",e:"___% of households earn $100,000 or more.",l:"San Francisco prices are high too, so compare with what the same households spend (Business Landscape)."}]},
+   {k:/rent|apartment|housing|dorm|roommate|landlord|move|moving|storage|space/, L:[
+     {q:"How many people rent, and how often do they move?",t:ACS,m:"Geographics > Housing > Renter-occupied, Moved in the past year; Median gross rent tile",e:"___% of homes are renter-occupied and median gross rent is $___.",l:"Renting says nothing about whether they have a storage problem. Back it up with an interview."}]},
+   {k:/commute|transit|bus|muni|bart|scooter|bike|bicycle|car|drive|parking|vehicle|traffic|walk|ride|travel|umbrella|rain/, L:[
+     {q:"How do people get around, and how many have no car?",t:ACS,m:"Geographics > Getting to work (Public transit, Walked or biked, Drove alone, Commute 30+ min) and Household tech & vehicles > No vehicle available",e:"___% of workers take public transit and ___% of households have no vehicle.",l:"This is how workers get to work only. It leaves out students, kids, and weekend trips."}]},
+   {k:/remote|work from home|laptop|study|cafe|coworking|focus|freelanc/, L:[
+     {q:"How many people work from home and how many commute a long way?",t:ACS,m:"Geographics > Getting to work > Worked from home, Commute 30+ min",e:"___% of workers work from home.",l:"Work from home counts people with jobs. It does not count students."}]},
+   {k:/immigrant|culture|cultural|language|spanish|chinese|filipino|mexican|asian|latin|arab|traditional|authentic|heritage|translate/, L:[
+     {q:"How many people were born abroad or speak another language at home?",t:ACS,m:"Demographics > Nativity & language > Foreign-born, Speaks only English at home; Race & ethnicity",e:"___% of residents are foreign-born and ___% speak a language other than English at home.",l:"Be careful. Culture and ethnicity do not decide what a person buys. Use it to find where a community lives, then ask them."}]},
+   {k:/health|sick|doctor|insurance|disab|medical|pain|sleep|stress|mental|dental|braces|skin|hair|acne|allerg/, L:[
+     {q:"How many people have a disability or no health insurance, and what do households spend on health?",t:ACS,m:"Demographics > Disability & health insurance; Business Landscape > Consumer spending (BLS CEX) > Healthcare",e:"___% have a disability and the average household spends $___ a year on healthcare.",l:"The ACS does not measure specific conditions like acne or dry hair. Use a survey for that."}]},
+   {k:/fitness|gym|workout|exercise|sport|dance|active|stretch|athlete|football|soccer|basketball|yoga/, L:[
+     {q:"How many people are in your age group, and what is spent on sports and entertainment?",t:ACS,m:"Demographics > Age groups; Business Landscape > Consumer spending > Entertainment > Fees and admissions",e:"___% are 18 to 24 and households spend $___ a year on fees and admissions.",l:"Spending categories are broad. Fees and admissions is not only fitness."}]},
+   {k:/phone|app|tech|computer|internet|wifi|digital|software|online|ai\b|artificial|game|gaming|stream/, L:[
+     {q:"How many households have a computer and internet?",t:BUY,m:"Business Landscape tools > Household tech & vehicles > Has a computer, Has an internet subscription",e:"___% of households have an internet subscription.",l:"Most SF households do, so this rarely proves a problem. Use it to show your users can reach you."},
+     {q:"What do households spend on audio and visual equipment and services?",t:BUY,m:"Consumer spending (BLS CEX) > Entertainment > Audio and visual equipment and services",e:"Households spend $___ a year on audio and visual equipment and services.",l:"Spending on apps is not tracked separately."}]},
+   {k:/food|eat|meal|lunch|dinner|snack|coffee|boba|tea|drink|restaurant|cook|recipe|bakery|cuisine|grocery|nutrition|hungry/, L:[
+     {q:"How much do households spend eating out, and how does that change with age or income?",t:BUY,m:"Consumer spending (BLS CEX) > Food > Food away from home; group by age or income",e:"Households in the Bay Area spend $___ a year on food away from home, which is ___ than the U.S. average.",l:"Spending is per household, not per person."}]},
+   {k:/cloth|fashion|shoe|jacket|jean|wear|outfit|closet|wardrobe|style|hoodie|apparel|dress/, L:[
+     {q:"How much do households spend on clothing and shoes?",t:BUY,m:"Consumer spending (BLS CEX) > Apparel and services > Footwear, Women and girls, Men and boys",e:"Households spend $___ a year on apparel and services.",l:"CEX does not show brand or style preferences. Use a survey."}]},
+   {k:/beauty|makeup|cosmetic|skincare|nail|salon|barber|grooming/, L:[
+     {q:"How much do households spend on personal care?",t:BUY,m:"Consumer spending (BLS CEX) > Personal care products and services",e:"Households spend $___ a year on personal care products and services.",l:"Personal care includes many things. Compare to your own price."}]},
+   {k:/pet|dog|cat\b|animal|collar|leash/, L:[
+     {q:"How much do households spend on pets?",t:BUY,m:"Consumer spending (BLS CEX) > Entertainment > Pets, toys, hobbies and playground equipment > Pets (national only)",e:"U.S. households spend $___ a year on pets.",l:"Pet spending is available for the U.S. only, not San Francisco."}]},
+   {k:/book|read|author|writer|novel|library|learn|tutor|class|education|teach|exam|college prep|homework|skill/, L:[
+     {q:"How much do households spend on education and reading, and how educated is the area?",t:BUY,m:"Consumer spending > Education, Reading; Demographics > Education",e:"Households spend $___ a year on education and $___ on reading.",l:"This is total spending, not spending on your specific kind of learning."}]},
+   {k:/job|work|career|hustle|earn|employ|intern|hire|worker|side/, L:[
+     {q:"What industries do people work in, and how many young people are in the workforce?",t:ACS,m:"Demographics > Industry of employment; Age groups",e:"The largest industry here is ___, which employs ___%.",l:"ACS industry is for workers 16 and older. It does not show who wants a side hustle."}]},
+   {k:/eco|green|waste|trash|recycl|sustain|environment|climate|compost|plastic|natural|organic/, L:[
+     {q:"What do people already care about, and how do your customers feel about the environment?",t:PSY,m:"Psychographics tool (values and interests)",e:"People who ___ tend to care about ___.",l:"Psychographics describe attitudes, so check your source and its sample."}]}
+  ];
+  var DEFAULTS=[{q:"Who lives in your area? Start with a basic profile.",t:ACS,m:"Stat tiles (Population, Median age, Households, Median household income) for San Francisco and then a neighborhood",e:"The median household income in ___ is $___, which is ___ than the U.S.",l:"Neighborhood numbers are estimates with a margin of error."}];
+
+  // ---- section scripts: prompts + generic suggestions + primary research
+  var SECTIONS={
+   problem:{title:"Problem / Opportunity",
+    prompts:[
+     {id:"who",label:"Who has the problem or opportunity?",ph:"example: high school students who lose their keys"},
+     {id:"what",label:"What happens to them, and how often?",ph:"example: they lose them twice a month and pay $20 to replace"},
+     {id:"where",label:"Where or when does it happen?",ph:"example: at school, on the bus, in San Francisco"}],
+    base:[
+     {q:"How big is the group that has this problem in your area?",t:ACS,m:"Stat tiles > Population, Households, and the matching Age groups card",e:"There are about ___ people in ___ who ___.",l:"Total population is not the same as people with your problem. Say how you estimated the share."}],
+    primary:[
+     {q:"How does the problem feel to the person who has it?",t:PRI,m:"Interviews: ask 3 people to tell you about the last time it happened",e:"3 out of 3 people I talked to said ___ happened in the past ___.",l:"A small sample tells a story. It does not prove how many people have the problem."},
+     {q:"How common is it among people like your customers?",t:PRI,m:"Surveys: ask 15 to 30 people one yes or no question and one how often question",e:"___ out of ___ people said they ___, which is ___%.",l:"Name who you asked. Friends are not the whole city."}]},
+   target:{title:"Target Market",
+    prompts:[
+     {id:"who",label:"Describe your main customer in one sentence.",ph:"example: a high school junior who commutes by bus"},
+     {id:"buy",label:"What would they buy from you, and about how much?",ph:"example: a $12 keychain tracker"},
+     {id:"where",label:"Where would you reach them?",ph:"example: Instagram and school fairs in the Sunset"}],
+    base:[
+     {q:"How many people fit your customer description in your area?",t:ACS,m:"Choose a neighborhood in Geographics & Demographics, then use the Age groups and Household income & poverty cards",e:"There are about ___ people in ___ who are ___. If ___% buy, that is ___ customers.",l:"Turn percentages into numbers: percent times population. Teachers asked for numbers."},
+     {q:"Do they have money to spend on this?",t:BUY,m:"Consumer spending (BLS CEX): pick the category closest to your product, compare by age or income",e:"A household like my customer spends $___ a year on ___.",l:"CEX groups by household, and age and income groups are U.S. wide."}],
+    primary:[
+     {q:"Does your customer actually want it, and what would they pay?",t:PRI,m:"Surveys + Test it: show a picture and price, count the yeses",e:"___ out of ___ people said they would pay $___.",l:"Saying yes is not buying. Treat it as interest."},
+     {q:"What does a day in your customer's life look like?",t:PRI,m:"Observation: watch where they go and what they use for 20 minutes",e:"I saw ___ people ___ in ___ minutes.",l:"One place and one time. Note that in your slide."}]},
+   competitive:{title:"Competitive Analysis",
+    prompts:[
+     {id:"what",label:"What are you selling, in a few words?",ph:"example: bubble tea, tutoring, a phone app"},
+     {id:"alt",label:"What do customers do today instead?",ph:"example: buy from a corner store, use a free app, do nothing"},
+     {id:"diff",label:"What will you do differently?",ph:"example: lower price, student discounts, faster"}],
+    base:[
+     {q:"How many businesses already do something like this near your customers?",t:BUY,m:"Business landscape: pick the closest category below, then compare Bay Area, California, and National counts",e:"There are ___ establishments in the Bay Area, so competition is ___.",l:"Counts businesses with locations. They do not show how busy each is or what they charge."},
+     {q:"What do competitors charge?",t:PRC,m:"Pricing & Costs: record 3 to 5 competitor prices from store pages or in person",e:"Competitors charge $___ to $___, so I will charge $___.",l:"Prices change. Write down the date."}],
+    primary:[
+     {q:"What do people say about the current options?",t:PRI,m:"Interviews: ask what they use now and what bugs them",e:"___ out of ___ people said ___ about ___.",l:"Five interviews give ideas, not a market share."}]}
+  };
+
+  // ---- NAICS-style categories in the hub (CBP), with plain-language words
+  var CATS=[
+   ["311811","Retail bakeries","bakery bread cake pastry cupcake dessert baked"],
+   ["445110","Grocery stores","grocery supermarket food market produce"],
+   ["445120","Convenience stores","convenience corner store snack"],
+   ["445291","Baked goods stores","baked goods donut cookie"],
+   ["446110","Pharmacies","pharmacy drug medicine health"],
+   ["446120","Cosmetics and beauty supply stores","cosmetics makeup skincare beauty supply"],
+   ["448140","Clothing stores","clothing clothes fashion jeans jacket hoodie shirt apparel"],
+   ["448150","Clothing accessories stores","accessories hat scarf belt hijab bag"],
+   ["448310","Jewelry stores","jewelry ring necklace bracelet"],
+   ["451110","Sporting goods stores","sports sporting equipment gear"],
+   ["451130","Sewing and craft stores","sewing craft fabric art supplies"],
+   ["451211","Book stores","book bookstore reading author"],
+   ["453210","Office supply and stationery stores","office supply stationery pen notebook binder"],
+   ["453220","Gift and novelty stores","gift novelty souvenir basket keychain magnet"],
+   ["453910","Pet and pet supply stores","pet dog cat animal collar"],
+   ["453998","Other specialty retailers","gadget product tool device storage home goods"],
+   ["541511","Custom software and app development services","app software website developer"],
+   ["541921","Photography studios","photography photo photographer pictures"],
+   ["561720","Janitorial services","cleaning janitorial trash bin"],
+   ["561730","Landscaping services","landscaping garden lawn plants"],
+   ["611610","Fine arts schools","art school music dance painting"],
+   ["611620","Sports and recreation instruction","sports coaching instruction lessons training"],
+   ["611691","Tutoring and exam prep","tutoring tutor exam prep homework test prep teaching"],
+   ["711510","Independent artists, writers, performers","artist writer author performer musician creator"],
+   ["713940","Gyms and fitness centers","gym fitness workout exercise yoga"],
+   ["713950","Bowling centers","bowling arcade game lounge"],
+   ["722320","Caterers","catering catered events party"],
+   ["722330","Food trucks and mobile food","food truck mobile cart pop-up popup"],
+   ["722410","Bars","bar drinks nightlife"],
+   ["722511","Full-service restaurants","restaurant dining cuisine mexican chinese filipino authentic"],
+   ["722513","Limited-service restaurants","fast food quick service takeout meal counter"],
+   ["722514","Cafeterias","cafeteria buffet"],
+   ["722515","Coffee shops and snack bars","coffee cafe boba bubble tea tea drinks snack study"],
+   ["811111","Auto repair","car auto repair mechanic"],
+   ["811192","Car washes","car wash"],
+   ["812112","Beauty salons","salon hair hairdresser braids"],
+   ["812113","Nail salons","nails manicure"],
+   ["812191","Diet and weight-loss centers","diet weight loss nutrition"],
+   ["812199","Other personal care services","personal care spa massage wellness"],
+   ["812310","Laundromats","laundry laundromat wash"],
+   ["812320","Dry cleaning","dry cleaning alterations"],
+   ["812910","Pet care services","pet care grooming dog walking sitting"]
+  ];
+  var COHORT={
+   "Food + Beverage":["722515","722511","722513","722330","311811"],
+   "Fashion / Beauty":["448140","448150","446120","812112","812113"],
+   "Fitness / Health":["713940","611620","812191","812199"],
+   "Services":["561720","541921","812199","811192"],
+   "Educational Service":["611691","611620","611610"],
+   "Gadgets / Home Goods":["453998","453220","453210"],
+   "Eco / Natural":["453998","561730","446120"],
+   "Apps":["541511"]
+  };
+  var GAPS=[
+   {k:/app|platform|website|software|ai\b|online/, m:"Apps and websites are not stores, so counting establishments undercounts them. Search the Apple App Store or Google Play for your idea and write down the top 5 apps, their price, and their ratings count."},
+   {k:/rent|rental|share|sharing|lend|borrow/, m:"Rental and sharing businesses have their own NAICS codes (rental and leasing, 532), which are not in the hub's data yet. Search data.sf.gov's Registered Business Locations by that code or by keyword."},
+   {k:/invent|device|gadget|new product|patent|never been/, m:"If your product is new, there may be no business category for it. Search stores, Amazon, and Google Shopping for the closest substitute, and compare prices."},
+   {k:/game|gaming|lounge|arcade|entertainment|recreation/, m:"Gaming lounges and arcades fall under amusement and recreation (713), only bowling is in the hub. Search data.sf.gov by keyword."},
+   {k:/nonprofit|social|community|volunteer|youth program/, m:"Community and social services are under 624, which is not in the hub. Look for local programs on city and school websites."}
+  ];
+
+  function suggest(section, answers){
+    // OPTION B HOOK: replace this function with a call to an AI service that returns the same shape.
+    var sec=SECTIONS[section], txt=Object.keys(answers).map(function(k){return answers[k];}).join(" ").toLowerCase();
+    var out=[], seen={};
+    function add(x){ var id=x.q; if(!seen[id]){ seen[id]=1; out.push(x); } }
+    RULES.forEach(function(r){ if(r.k.test(txt)) r.L.forEach(add); });
+    if(!out.length) DEFAULTS.forEach(add);
+    (sec.base||[]).forEach(add);
+    (sec.primary||[]).forEach(add);
+    return out.slice(0,7);
+  }
+
+  var STOP={shop:1,store:1,stores:1,business:1,service:1,services:1,the:1,and:1,for:1,with:1,that:1,sell:1,selling:1,make:1,makes:1,help:1,helps:1,new:1,own:1,people:1};
+  function matchCats(txt, n){
+    var words=txt.toLowerCase().replace(/[^a-z0-9 ]/g," ").split(/\s+/).filter(function(w){return w.length>2 && !STOP[w];});
+    var sc=CATS.map(function(c){
+      var hw=(c[1]+" "+c[2]).toLowerCase().replace(/[^a-z0-9 ]/g," ").split(/\s+/), kw=c[2].toLowerCase().split(" "), s=0;
+      words.forEach(function(w){
+        var hit=hw.some(function(x){ return x===w || (w.length>=4 && x.indexOf(w)===0) || (x.length>=4 && w.indexOf(x)===0); });
+        if(hit) s+= (kw.indexOf(w)>-1?2:1);
+      });
+      return {c:c,s:s};
+    }).filter(function(x){return x.s>0;}).sort(function(a,b){return b.s-a.s;});
+    return sc.slice(0,n).map(function(x){return x.c;});
+  }
+  function catRow(c){
+    return '<li><b>'+esc(c[1])+'</b> <span class="fd-code">NAICS '+esc(c[0])+'</span></li>';
+  }
+  var HELP_COUNT='<div class="fd-note"><b>How to read the counts.</b> The number is how many business locations (establishments) there are, not how many customers or how much money. A big number can mean lots of demand or lots of competition. Compare the Bay Area to the U.S.: if your category is much denser, the market is crowded or proven. If it is much thinner, it is either a gap or a sign that people do not want it. Check which it is by asking people.</div>';
+
+  function render(host, section){
+    var sec=SECTIONS[section]; if(!sec){ host.innerHTML=""; return; }
+    var h='<section class="fd" aria-labelledby="fd-h-'+section+'"><div class="eyebrow">Data Finder</div><h3 class="section-title" id="fd-h-'+section+'">What should I look up for '+esc(sec.title)+'?</h3>'
+     +'<p class="section-sub">Answer the short prompts. The tool suggests what to look up in this hub. It matches your words to a list, so it can miss or guess wrong. Check whether each suggestion fits your idea. Nothing you type is saved or sent anywhere.</p>'
+     +'<form class="fd-form" autocomplete="off">'
+     + sec.prompts.map(function(p){ return '<label class="fd-lab" for="fd-'+section+'-'+p.id+'">'+esc(p.label)+'</label><textarea class="fd-in" rows="2" id="fd-'+section+'-'+p.id+'" data-k="'+p.id+'" placeholder="'+esc(p.ph)+'" maxlength="400"></textarea>'; }).join("")
+     +'<div class="fd-btns"><button type="submit" class="bp-chip primary">Show what to look up</button><button type="button" class="bp-chip fd-reset">Clear</button></div></form>'
+     +'<div class="fd-out" aria-live="polite"></div>';
+    if(section==="competitive") h+=naicsHtml();
+    h+='</section>';
+    host.innerHTML=h;
+    var form=host.querySelector(".fd-form"), out=host.querySelector(".fd-out");
+    form.addEventListener("submit",function(e){
+      e.preventDefault();
+      var a={}; form.querySelectorAll("textarea").forEach(function(t){ a[t.getAttribute("data-k")]=t.value; });
+      var txt=Object.keys(a).map(function(k){return a[k];}).join(" ").trim();
+      if(txt.length<4){ out.innerHTML='<p class="fd-warn">Write a few words in the boxes first.</p>'; return; }
+      var list=suggest(section,a), cats=[];
+      if(section==="competitive"){ cats=matchCats(a.what+" "+a.alt,4); }
+      var o='<h4 class="fd-h4">Look these up ('+list.length+')</h4><ol class="fd-list">'
+       + list.map(function(x){ return '<li class="fd-card"><div class="fd-q">'+esc(x.q)+'</div>'
+        +'<div class="fd-row"><span class="fd-lbl">Where</span><span><button type="button" class="bp-link" data-go="'+x.t+'">'+esc(TOOLN[x.t])+'</button>: '+esc(x.m)+'</span></div>'
+        +'<div class="fd-row"><span class="fd-lbl">Say it like</span><span class="fd-eg">'+esc(x.e)+'</span></div>'
+        +'<div class="fd-row"><span class="fd-lbl">Limit</span><span>'+esc(x.l)+'</span></div></li>'; }).join("")+'</ol>';
+      if(section==="competitive"){
+        o+='<h4 class="fd-h4">Business categories that may match</h4>';
+        o+= cats.length ? '<ul class="fd-cats">'+cats.map(catRow).join("")+'</ul><p class="fd-small">In <button type="button" class="bp-link" data-go="buying">Business Landscape</button>, find the category with this name and read the establishment counts.</p>' : '<p class="fd-small">No close category in the hub. See the next box.</p>';
+        var gaps=GAPS.filter(function(g){return g.k.test(txt.toLowerCase());});
+        if(!cats.length && !gaps.length) gaps=[{m:"Your idea may not be a store. Search stores, apps, or websites for the closest substitute, write down 3 to 5 names and prices, and say how you are different."}];
+        o+=gaps.map(function(g){ return '<div class="fd-note">'+esc(g.m)+'</div>'; }).join("");
+        o+=HELP_COUNT;
+      }
+      o+='<p class="fd-small">These are starting points. Pick two or three, find the real number, and write it with a source.</p>';
+      out.innerHTML=o;
+    });
+    host.querySelector(".fd-reset").addEventListener("click",function(){ form.reset(); out.innerHTML=""; });
+    var nb=host.querySelector(".fd-naics");
+    if(nb){
+      var inp=nb.querySelector("input"), res=nb.querySelector(".fd-nres");
+      function doSearch(){
+        var v=inp.value.trim();
+        if(v.length<3){ res.innerHTML=""; return; }
+        var m=matchCats(v,6);
+        res.innerHTML = m.length ? '<ul class="fd-cats">'+m.map(catRow).join("")+'</ul><p class="fd-small">Open <button type="button" class="bp-link" data-go="buying">Business Landscape</button> and choose the category by its name.</p>' : '<p class="fd-small">No match in the hub. Try a simpler word such as "coffee", "gym", or "clothing", or see the box above for apps and rentals.</p>';
+      }
+      inp.addEventListener("input",doSearch);
+      nb.querySelectorAll("[data-coh]").forEach(function(b){ b.addEventListener("click",function(){
+        var ids=COHORT[b.getAttribute("data-coh")]||[];
+        res.innerHTML='<ul class="fd-cats">'+ids.map(function(id){ var c=CATS.filter(function(x){return x[0]===id;})[0]; return c?catRow(c):""; }).join("")+'</ul><p class="fd-small">Pick the one closest to your idea. For gaps, see the apps and rentals note above.</p>';
+      }); });
+    }
+  }
+  function naicsHtml(){
+    return '<div class="fd-naics"><h4 class="fd-h4">Find similar businesses</h4><p class="section-sub">Search by what the business does (coffee, tutoring, gym) or start from your cohort. Businesses are grouped by NAICS, a code the government uses for kinds of business.</p>'
+     +'<div class="bp-chips">'+Object.keys(COHORT).map(function(c){ return '<button type="button" class="bp-chip" data-coh="'+esc(c)+'">'+esc(c)+'</button>'; }).join("")+'</div>'
+     +'<label class="fd-lab" for="fd-naics-q">Search kinds of business</label><input id="fd-naics-q" class="fd-in" type="search" placeholder="example: tutoring, nail salon, food truck" maxlength="60"><div class="fd-nres" aria-live="polite"></div></div>';
+  }
+  window.renderFinder=function(route){
+    var h=document.getElementById("finderHost"); if(!h) return;
+    render(h,route);
+  };
+  window.hubSuggest=suggest;
+  (function(){ var r=(location.hash||'').replace('#',''); var host=document.getElementById('finderHost'); if(host && !host.innerHTML && SECTIONS[r]) render(host,r); })();
+})();
+
+</script>
 </body></html>
