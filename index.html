@@ -810,7 +810,7 @@
   .hp-in, .hp-box select, .hp-slot{ font:inherit; font-size:15px; padding:8px 10px; border:1px solid var(--border-strong); border-radius:4px; background:var(--surface-2); color:var(--ink); max-width:100%; }
   .hp-in{ width:100%; box-sizing:border-box; }
   .hp-menus{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:0 14px; margin-top:6px; }
-  .hp-menus select{ width:100%; }
+  .hp-menus select{ width:100%; } .hp-field{ min-width:0; } .hp-out{ scroll-margin-top:84px; }
   .hp-more{ margin-top:10px; } .hp-more summary{ cursor:pointer; font-weight:600; color:var(--accent); }
   .hp-btns{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
   .hp-btns a.bp-chip{ text-decoration:none; }
@@ -818,7 +818,8 @@
   .hp-warn{ font-size:14px; color:var(--accent-2); font-weight:600; }
   .hp-h4{ font-size:16px; margin:16px 0 6px; }
   .hp-sentence{ display:flex; flex-wrap:wrap; align-items:center; gap:8px 6px; margin:14px 0; font-size:17px; line-height:1.4; }
-  .hp-sentence .hp-slot{ font-weight:600; border-width:2px; border-color:var(--accent); min-width:140px; }
+  .hp-sentence .hp-slot{ font-weight:600; border-width:2px; border-color:var(--accent); min-width:140px; width:auto; max-width:min(100%,380px); flex:0 1 auto; }
+  .hp-sentence .hp-w{ flex:0 0 auto; }
   .hp-sug{ list-style:none; padding:0; margin:0; display:grid; gap:10px; }
   .hp-sugitem{ border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:5px; padding:10px 12px; background:var(--surface-2); }
   .hp-q{ font-weight:700; margin-bottom:4px; }
@@ -4850,7 +4851,7 @@ window.SITE = {
 
   var INFER = {
     customer:[["college",/college|young adult|campus/],["parents",/parent|baby|toddler|famil|childcare|daycare/],["older",/senior|elder|older|grandparent|retire/],["commuters",/commut|bus\b|transit|scooter|bike|umbrella|rain|parking|traffic/],["active",/athlete|sport|fitness|gym|dance|workout|football|yoga|stretch/],["biz",/small business|owner|cafe owner|worker|employee|hire|entrepreneur/],["pet",/\bpet|dog|cat\b|collar/],["shopper",/cloth|fashion|beauty|makeup|style|outfit|jeans|hoodie|jewelry/],["foodie",/food|eat|meal|coffee|boba|cook|recipe|restaurant|snack|soup/],["renters",/rent|apartment|dorm|roommate|storage|move/],["lowinc",/afford|cheap|budget|low.?income|poor|underserved/],["artist",/artist|author|writer|music|instrument|paint|book/],["teens",/teen|high school|student|school|locker|homework/]],
-    area:[["food",/food|eat|meal|coffee|cafe|boba|cook|recipe|restaurant|snack|soup|nutrition|drink/],["fashion",/cloth|fashion|beauty|makeup|style|outfit|jeans|hoodie|jacket|hijab|skincare|hair/],["fitness",/fitness|gym|sport|dance|workout|health|stretch|exercise|court/],["gadgets",/gadget|device|tool|locker|pillow|glass|container|keychain|home/],["eco",/eco|waste|trash|recycl|sustain|compost|plastic|natural|green|fertilizer|soap/],["education",/educat|learn|tutor|study|teach|exam|skill|school/],["community",/rent|share|sharing|lend|borrow|community|access|volunteer/],["career",/job|career|hustle|earn|intern|hire|worker/],["organize",/organiz|planner|binder|notebook|clutter/],["services",/service|clean|photograph|pet care|repair|laundry/],["apps",/\bapp\b|software|website|platform|\bai\b|online/],["fun",/game|gaming|social|lounge|arcade|fun|entertain/],["pets",/\bpet|dog|cat\b/]],
+    area:[["food",/food|eat|meal|coffee|cafe|boba|cook|recipe|restaurant|snack|soup|nutrition|drink/],["fashion",/cloth|fashion|beauty|makeup|style|outfit|jeans|hoodie|jacket|hijab|skincare|hair/],["fitness",/fitness|gym|sport|dance|workout|health|stretch|exercise|court/],["gadgets",/gadget|device|tool|locker|pillow|glass|container|keychain|home|phone|\bcase|charger|backpack|\bbag/],["eco",/eco|waste|trash|recycl|sustain|compost|plastic|natural|green|fertilizer|soap/],["education",/educat|learn|tutor|study|teach|exam|skill/],["community",/rent|share|sharing|lend|borrow|community|access|volunteer/],["career",/job|career|hustle|earn|intern|hire|worker/],["organize",/organiz|planner|binder|notebook|clutter/],["services",/service|clean|photograph|pet care|repair|laundry/],["apps",/\bapp\b|software|website|platform|\bai\b|online/],["fun",/game|gaming|social|lounge|arcade|fun|entertain/],["pets",/\bpet|dog|cat\b/]],
     problem:[["money",/afford|cheap|save money|expens|cost|price|budget|pocket money|earn|income|side hustle/],["time",/fast|quick|save time|hassle|wait|easy|convenien/],["access",/access|underserved|rent instead|share|can't afford|cannot afford/],["health",/health|sick|pain|sleep|skin|hair|stress|medical|dry|braces|floss/],["style",/looks|look good|style|fashion|aesthetic|express|custom/],["learning",/learn|study|tutor|skill|teach|exam|read|author/],["fun",/fun|game|social|hang out|lounge|play/],["env",/eco|waste|trash|recycl|sustain|plastic|compost|green/],["organize",/organiz|storage|clutter|locker|keep track|lost item|misplace/],["safety",/safe|secur|theft|protect|emergency|drunk/]]
   };
   ["customer","area","problem"].forEach(function(k){ INFER[k] = INFER[k].map(function(a){ return [a[0], new RegExp("\\b(?:" + a[1].source + ")", "i")]; }); });
@@ -4891,10 +4892,10 @@ window.SITE = {
     o = o || {};
     var id = "hi" + (++uid);
     var menus = '<div class="hp-menus">'
-      + '<label class="hp-lab" for="' + id + '-k">It is…</label><select id="' + id + '-k" data-f="kind">' + opts(KINDS, "choose…") + '</select>'
-      + '<label class="hp-lab" for="' + id + '-a">It is about…</label><select id="' + id + '-a" data-f="area">' + opts(AREAS, "choose…") + '</select>'
-      + '<label class="hp-lab" for="' + id + '-c">My customer is…</label><select id="' + id + '-c" data-f="customer">' + opts(CUSTOMERS, "choose…") + '</select>'
-      + '<label class="hp-lab" for="' + id + '-p">It helps by…</label><select id="' + id + '-p" data-f="problem">' + opts(PROBLEMS, "choose…") + '</select></div>';
+      + '<div class="hp-field"><label class="hp-lab" for="' + id + '-k">It is…</label><select id="' + id + '-k" data-f="kind">' + opts(KINDS, "choose…") + '</select></div>'
+      + '<div class="hp-field"><label class="hp-lab" for="' + id + '-a">It is about…</label><select id="' + id + '-a" data-f="area">' + opts(AREAS, "choose…") + '</select></div>'
+      + '<div class="hp-field"><label class="hp-lab" for="' + id + '-c">My customer is…</label><select id="' + id + '-c" data-f="customer">' + opts(CUSTOMERS, "choose…") + '</select></div>'
+      + '<div class="hp-field"><label class="hp-lab" for="' + id + '-p">It helps by…</label><select id="' + id + '-p" data-f="problem">' + opts(PROBLEMS, "choose…") + '</select></div></div>';
     host.innerHTML = '<div class="hp-box' + (o.big ? ' hp-big' : '') + '"><h3 class="section-title">' + esc(o.title || "I have an idea: what should I research?") + '</h3>'
       + '<p class="section-sub">' + esc(o.sub || "Describe your idea in a few words, or choose from the menus, or both. The tool suggests questions to research, and you can see each answer.") + '</p>'
       + '<label class="hp-lab" for="' + id + '-t">Describe your idea or project</label>'
@@ -4905,7 +4906,7 @@ window.SITE = {
       + '<div class="hp-out" aria-live="polite"></div></div>';
     var out = host.querySelector(".hp-out"), ta = host.querySelector(".hp-in");
     function vals(){ var v = { text: ta.value.trim() }; Array.prototype.forEach.call(host.querySelectorAll("[data-f]"), function(s){ v[s.getAttribute("data-f")] = s.value; }); return v; }
-    function run(){
+    function run(scroll){
       var v = vals();
       if(v.text.length < 4 && !v.area && !v.customer && !v.problem){ out.innerHTML = '<p class="hp-warn">Write a few words about your idea, or choose an option from a menu.</p>'; return; }
       var T = infer(v.text), used = [];
@@ -4920,9 +4921,10 @@ window.SITE = {
       }).join("") + '</ol>';
       out.innerHTML = h;
       out._sug = sug;
+      if(scroll){ try{ out.scrollIntoView({ behavior: (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) ? "auto" : "smooth", block:"start" }); }catch(e){ out.scrollIntoView(); } }
     }
     host.addEventListener("click", function(e){
-      if(e.target.closest(".hp-go")){ run(); }
+      if(e.target.closest(".hp-go")){ run(true); }
       else if(e.target.closest(".hp-reset")){ ta.value = ""; Array.prototype.forEach.call(host.querySelectorAll("[data-f]"), function(s){ s.value = ""; }); out.innerHTML = ""; }
       else { var b = e.target.closest(".hp-show"); if(b){ var item = b.closest(".hp-sugitem"), ans = item.querySelector(".hp-ans"); showResult(ans, out._sug[+b.getAttribute("data-i")].spec); b.hidden = true; } }
     });
