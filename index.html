@@ -462,6 +462,16 @@
   .ex-foot{ font-size:13.5px; color:var(--ink-2); max-width:78ch; margin-top:34px; border-top:1px solid var(--line); padding-top:12px; line-height:1.55; }
   .ex-empty{ font-size:15px; color:var(--ink-2); }
 
+
+  .bp-blocks > *, .bp-block{ min-width:0; }
+  .bp-block.wide{ grid-column:1 / -1; }
+  .naics-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:6px; background:var(--surface); max-width:100%; }
+  .naics-table{ border-collapse:collapse; width:100%; font-size:14.5px; min-width:520px; }
+  .naics-table th, .naics-table td{ text-align:left; padding:8px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+  .naics-table thead th{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-muted); background:var(--surface-2); }
+  .naics-table tbody th{ font-family:'IBM Plex Mono',monospace; font-weight:700; color:var(--accent); white-space:nowrap; }
+  .naics-table tbody tr:last-child th, .naics-table tbody tr:last-child td{ border-bottom:0; }
+
   .tab-panel{ }
 
   /* Home tab */
@@ -2834,12 +2844,194 @@ window.SITE = {
       { id: "acs", name: "Geographics & Demographics", icon: "👥", q: "Where do they live and work? Plus age, income, household size, education, and more.", tag: "Census data", feeds: ["problem", "target", "plan"] },
       { id: "psychographics", name: "Psychographics", icon: "💭", q: "What do they like outside of work?", tag: "Guided sources", feeds: ["problem", "value", "target", "marketing"] },
       { id: "buying", name: "Business Landscape", icon: "🛒", q: "How much do they spend, and who's already selling to them?", tag: "Survey and business data", feeds: ["target", "marketing", "competitive", "cost", "plan"] },
+      { id: "naics", name: "NAICS Guide", icon: "🔢", q: "What kind of business is it, and how do I find similar ones?", tag: "Reference guide", feeds: ["target", "competitive"] },
       { id: "primary", name: "Primary Research", icon: "📝", q: "What do your own customers say and do?", tag: "Your own work", feeds: ["problem", "value", "target", "competitive", "cost"] },
       { id: "pricing", name: "Pricing & Costs", icon: "🧮", q: "What do competitors charge, and what will it cost you?", tag: "Your own work", feeds: ["marketing", "competitive", "cost", "plan"] }
     ]
   },
 
   pages: {
+    naics: {
+      "eyebrow": "Research Hub · NAICS Guide",
+      "title": "NAICS: the code for kinds of business",
+      "tagline": "NAICS (say \"nakes\") is the code the U.S. government uses to sort every business by what it does. It works like the Dewey system in a library: the first digits give the big subject, and each extra digit narrows it down. Knowing your code helps you name your industry, find your real competitors, and line up data from different sources.",
+      "blocks": [
+        {
+          "h": "How the digits work",
+          "p": "Each digit you add zooms in. Zoom out for the size of a whole industry. Zoom in to find direct competitors.",
+          "items": [
+            "2 digits: the sector, the biggest group. Example: 72, accommodation and food services",
+            "3 digits: the subsector. Example: 722, food services and drinking places",
+            "4 digits: the industry group. Example: 7225, restaurants and other eating places",
+            "5 digits: the industry. Example: 72251",
+            "6 digits: the specific kind of business. Example: 722515, snack and nonalcoholic beverage bars. The hub calls this \"Coffee shops & snack bars.\"",
+            "Three sectors use a range of two-digit codes: 31-33 (manufacturing), 44-45 (retail) and 48-49 (transportation)."
+          ]
+        },
+        {
+          "h": "The 20 sectors (first two digits)",
+          "p": "Start here to see which sector your idea lives in.",
+          "table": {
+            "head": [
+              "Code",
+              "Sector",
+              "Examples"
+            ],
+            "rows": [
+              [
+                "11",
+                "Agriculture, forestry, fishing and hunting",
+                "Farms, fishing, forestry"
+              ],
+              [
+                "21",
+                "Mining, quarrying, oil and gas",
+                "Mines, oil and gas wells"
+              ],
+              [
+                "22",
+                "Utilities",
+                "Electric, water and gas companies"
+              ],
+              [
+                "23",
+                "Construction",
+                "Building, remodeling, electrical and plumbing work"
+              ],
+              [
+                "31-33",
+                "Manufacturing",
+                "Factories that make food, clothing, electronics"
+              ],
+              [
+                "42",
+                "Wholesale trade",
+                "Companies that sell to stores, not to the public"
+              ],
+              [
+                "44-45",
+                "Retail trade",
+                "Stores: clothing, books, pets, groceries, pharmacies"
+              ],
+              [
+                "48-49",
+                "Transportation and warehousing",
+                "Delivery, trucking, transit, warehouses"
+              ],
+              [
+                "51",
+                "Information",
+                "Software publishing, media, telecommunications"
+              ],
+              [
+                "52",
+                "Finance and insurance",
+                "Banks, credit unions, insurance"
+              ],
+              [
+                "53",
+                "Real estate and rental and leasing",
+                "Property management, equipment rental"
+              ],
+              [
+                "54",
+                "Professional, scientific and technical services",
+                "App development, photography, design, consulting"
+              ],
+              [
+                "55",
+                "Management of companies",
+                "Headquarters and holding companies"
+              ],
+              [
+                "56",
+                "Administrative, support and waste services",
+                "Cleaning, landscaping, staffing, security"
+              ],
+              [
+                "61",
+                "Educational services",
+                "Tutoring, test prep, music and art lessons, schools"
+              ],
+              [
+                "62",
+                "Health care and social assistance",
+                "Doctors, dentists, child care"
+              ],
+              [
+                "71",
+                "Arts, entertainment and recreation",
+                "Gyms, bowling, artists, museums"
+              ],
+              [
+                "72",
+                "Accommodation and food services",
+                "Restaurants, coffee shops, food trucks, hotels"
+              ],
+              [
+                "81",
+                "Other services",
+                "Salons, car washes, laundromats, repair, pet care"
+              ],
+              [
+                "92",
+                "Public administration",
+                "Government agencies"
+              ]
+            ]
+          }
+        },
+        {
+          "h": "Find your code",
+          "p": "Your code should describe what your business does, not what it sells or who it sells to.",
+          "items": [
+            "Write one sentence: \"We do ___ for ___.\" Pick the main activity.",
+            "Search the official NAICS site (link below) with two or three keywords for that activity.",
+            "Read the definition and what is included and excluded. Compare two or three candidate codes.",
+            "Pick the closest one and write it down with its name. Then say in your notes why you chose it.",
+            "For the 42 business types in the hub's data, use the \"Find similar businesses\" box in the Research Helper to see the code and its name."
+          ],
+          "link": {
+            "href": "https://www.census.gov/naics/",
+            "label": "Official NAICS search (census.gov/naics, opens in a new tab)"
+          }
+        },
+        {
+          "h": "Where the hub uses NAICS",
+          "p": "Two data sources in the Business Landscape tool are organized by code.",
+          "items": [
+            "County Business Patterns (Census Bureau): for 42 business types, the number of businesses, employees and yearly payroll in Bay Area counties, California and the U.S. Use it to size an industry.",
+            "DataSF Registered Business Locations: for the same business types, current active businesses and new registrations per year (2010 to 2026) in 41 San Francisco neighborhoods. Use it to count competitors near your customers and to see whether a category is growing."
+          ],
+          "go": [
+            {
+              "to": "buying",
+              "label": "Open the Business Landscape tab"
+            },
+            {
+              "to": "helper",
+              "label": "Open the Research Helper"
+            }
+          ]
+        },
+        {
+          "h": "How a code helps your pitch",
+          "p": "A code turns a vague claim into a number you can check.",
+          "items": [
+            "Competitive Analysis: the code defines who counts as a competitor. Count the businesses with that code in your neighborhood.",
+            "Problem / Opportunity and Target Market: businesses, employees and payroll show how big the industry is.",
+            "Growth: new registrations by year show whether a category is growing or getting crowded.",
+            "Cost Structure: payroll divided by employees gives a rough idea of what that kind of business pays."
+          ]
+        }
+      ],
+      "notes": [
+        "County Business Patterns counts only businesses with paid employees. Solo founders and side hustles are left out, so small competitors are undercounted.",
+        "On DataSF, each business chooses its own code, so treat codes as approximate. \"New registrations\" is when a business registered, not necessarily when it opened.",
+        "New ideas may not fit a code cleanly. An app can land in different sectors depending on how it makes money (for example 51 or 54). Pick the closest code and say so in your evidence log.",
+        "The hub has data for 42 business types, not every code. For anything else, search the official site and use DataSF's Registered Business Locations on data.sf.gov."
+      ]
+    },
     primary: {
       eyebrow: "Research Hub · Primary Research",
       title: "Your own research",
@@ -4106,7 +4298,11 @@ window.SITE = {
     $("pageHost").innerHTML = subnav(id)
       + '<header class="masthead"><div class="eyebrow">'+esc(p.eyebrow)+'</div><h2 class="tab-h1">'+esc(p.title)+'</h2><p class="tagline">'+esc(p.tagline)+'</p></header>'
       + '<div class="bp-blocks">'+p.blocks.map(function(b){
-          return '<section class="bp-block"><h3 class="section-title">'+esc(b.h)+'</h3><p class="section-sub">'+esc(b.p)+'</p>'+list(b.items)+'</section>';
+          return '<section class="bp-block'+(b.table?' wide':'')+'"><h3 class="section-title">'+esc(b.h)+'</h3><p class="section-sub">'+esc(b.p)+'</p>'+(b.items ? list(b.items) : "")
+            + (b.table ? '<div class="naics-wrap"><table class="naics-table"><thead><tr>'+b.table.head.map(function(h){ return '<th>'+esc(h)+'</th>'; }).join("")+'</tr></thead><tbody>'+b.table.rows.map(function(r){ return '<tr>'+r.map(function(c,i){ return (i===0?'<th scope="row">':'<td>')+esc(c)+(i===0?'</th>':'</td>'); }).join("")+'</tr>'; }).join("")+'</tbody></table></div>' : "")
+            + (b.link ? '<p><a class="bp-link" href="'+esc(b.link.href)+'" target="_blank" rel="noopener">'+esc(b.link.label)+'</a></p>' : "")
+            + (b.go ? '<p class="bp-chips">'+b.go.map(function(g){ return '<button type="button" class="bp-chip" data-go="'+esc(g.to)+'">'+esc(g.label)+'</button>'; }).join("")+'</p>' : "")
+            + '</section>';
         }).join("")+'</div>'
       + (p.notes.length ? '<section class="callout-block muted-callout"><h3>Keep in mind</h3>'+list(p.notes)+'</section>' : "")
       + '<h3 class="section-title">Sections this feeds</h3><div class="bp-chips">'+toolById[id].feeds.map(function(f){ return chip(f); }).join("")+'</div>';
