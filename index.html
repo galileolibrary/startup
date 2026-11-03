@@ -996,6 +996,33 @@
   .cons-shoot{ animation: consShoot 1.3s ease-out forwards; opacity:0; }
   @keyframes consShoot{ 0%{ transform: translate(var(--x), var(--y)); opacity:0; } 10%{ opacity:1; } 100%{ transform: translate(calc(var(--x) + 220px), calc(var(--y) + 125px)); opacity:0; } }
   @media (prefers-reduced-motion: reduce){ .cons-tw, .cons-shoot{ animation:none; } .cons-tw{ opacity:.7; } }
+
+  /* ===== Masthead v2: drafting callouts, softened grid ===== */
+  .site-masthead{ color:#e6eefa;
+    background:
+      linear-gradient(rgba(255,255,255,.10) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.10) 1px, transparent 1px),
+      linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px),
+      #1b4a88;
+    background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px, auto;
+    border-color:#143868; }
+  .site-masthead::before{ content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+    background: radial-gradient(ellipse 62% 66% at 14% 22%, rgba(27,74,136,.96) 0%, rgba(27,74,136,.82) 48%, rgba(27,74,136,0) 100%); }
+  .site-masthead .intro{ color:#e6eefa; }
+  .cons-caption{ color:#e6eefa; }
+  .cons-legend{ color:#cfe0f7; }
+  .lg.blue{ background:#1b4a88; border:2px solid #dbe8f7; width:12px; height:12px; box-sizing:border-box; }
+  .lg.gold{ background:#ffe2a0; border:2px solid #ffd98f; width:12px; height:12px; box-sizing:border-box; }
+  .lg.violet{ background:transparent; border:2px solid #e6eefa; box-shadow: inset 0 0 0 2px #1b4a88, inset 0 0 0 3px #e6eefa; width:14px; height:14px; box-sizing:border-box; }
+  .cons-line, .cons-line.faint{ stroke: rgba(219,232,250,.42); stroke-width:1; }
+  .cons-line.faint{ stroke-dasharray: 5 5; stroke: rgba(219,232,250,.30); }
+  .cons-label{ font: 500 11px 'IBM Plex Mono', ui-monospace, monospace; letter-spacing:.06em; fill:#e6eefa; stroke:#1b4a88; stroke-width:4px; }
+  .cons-star:hover .cons-label, .cons-star:focus-visible .cons-label{ fill:#fff; }
+  .cons-num{ font: 700 12px 'IBM Plex Mono', ui-monospace, monospace; fill:#e6eefa; }
+  .cons-num.need{ fill:#2a1b00; }
+  .cons-shelf{ stroke:#dbe8f7; stroke-opacity:.7; stroke-width:1; fill:none; }
+  .cons-star:hover .cons-shelf, .cons-star:focus-visible .cons-shelf{ stroke-opacity:1; }
   .bp-res{ display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap:10px; margin-bottom: 20px; }
   .bp-res-card{ display:flex; flex-direction:column; gap:4px; text-decoration:none; background: var(--surface); border:1px solid var(--border); border-radius:12px; padding:12px 14px; color: var(--ink); }
   .bp-res-card:hover{ border-color: var(--accent); }
@@ -1020,8 +1047,6 @@
   <nav class="top-nav" id="topNav" aria-label="Site sections">
     <button class="top-nav-btn" data-tab="home" aria-selected="true" type="button">Plan Roadmap</button>
     <button class="top-nav-btn" data-tab="research" aria-selected="false" type="button">Research Hub</button>
-    <button class="top-nav-btn" data-tab="missions" aria-selected="false" type="button">Missions</button>
-    <button class="top-nav-btn" data-tab="games" aria-selected="false" type="button">Games</button>
     <button class="top-nav-btn" data-tab="exemplars" aria-selected="false" type="button">Exemplars</button>
   </nav>
 
@@ -1033,11 +1058,6 @@
     </section>
     <section>
       <div class="bp-grid" id="roadmapGrid"></div>
-    </section>
-    <section class="callout-block">
-      <h3>New: Missions</h3>
-      <p>Practice finding real numbers, building a target market story, and defending it the way a judge will ask. Study a winning pitch, then try the levels. <button type="button" class="bp-link" data-go="missions">Open Missions</button></p>
-      <p>Also new: two games. Guess who buys from a real local business, then race a classmate to find numbers. <button type="button" class="bp-link" data-go="games">Open Games</button></p>
     </section>
     <section class="callout-block">
       <h3>How to use this site</h3>
@@ -4152,6 +4172,13 @@ window.SITE = {
     return okLayout(pts, planet, w, h) ? { pts: pts, h: h, planet: planet } : null;
   }
   function layout(w){
+    var n = S.steps.length, wide = w >= 760;
+    if(wide){ var pad = 70, st = (w - 2*pad - 40)/(n-1);
+      return { h: 250, planet: { x: w-60, y: 200 }, pts: S.steps.map(function(_,i){ return { x: pad + i*st, y: 110, label: i%2===0 ? "above" : "below" }; }) }; }
+    var gap = 52, h = 60 + (n-1)*gap + 110;
+    return { h: h, planet: { x: w*0.5, y: h-48 }, pts: S.steps.map(function(_,i){ return { x: w*0.14, y: 34 + i*gap, label: "right" }; }) };
+  }
+  function layoutOld(w){
     var L = null, tries = 0, wide = w >= 760;
     while(!L && tries++ < 300){ L = wide ? wideRandom(w) : narrowRandom(w); }
     if(L) return L;
@@ -4179,41 +4206,46 @@ window.SITE = {
     cons.lines = [];
     for(var j=0;j<L.pts.length-1;j++){ cons.lines.push(el("line", { "class": "cons-line", "stroke-linecap": "round" }, lineG)); }
     cons.pairs = []; for(var q=0;q<L.pts.length-1;q++){ cons.pairs.push([q,q+1]); }
-    var ex = {}; var extraN = 2;
+    var ex = {}; var extraN = 0;
     while(extraN>0){ var e0 = Math.floor(Math.random()*(L.pts.length-2)); if(ex[e0]) continue; ex[e0]=1; extraN--;
       cons.pairs.push([e0,e0+2]); cons.lines.push(el("line", { "class": "cons-line faint", "stroke-linecap": "round" }, lineG)); }
     cons.shoot = el("g", { "aria-hidden": "true" }, svg);
 
     // planet = Research Hub
     var pg = el("g", { "class": "cons-star cons-planet", role: "link", tabindex: "0", "data-go": "research", "aria-label": "Research Hub" }, svg);
-    el("circle", { r: 54, fill: "url(#haloP)" }, pg);
-    el("ellipse", { rx: 46, ry: 12, fill: "none", stroke: "#c9b3ff", "stroke-opacity": ".55", "stroke-width": 1.6, transform: "rotate(-18)" }, pg);
-    el("circle", { r: 22, fill: "#7a5cd6", stroke: "#cdbbff", "stroke-width": 1.2, "class": "cons-core" }, pg);
+        el("line", { x1: -34, x2: 34, y1: 0, y2: 0, stroke: "#dbe8f7", "stroke-opacity": ".45", "stroke-width": 1 }, pg);
+    el("line", { y1: -34, y2: 34, x1: 0, x2: 0, stroke: "#dbe8f7", "stroke-opacity": ".45", "stroke-width": 1 }, pg);
+    el("circle", { r: 24, fill: "#1b4a88", stroke: "#e6eefa", "stroke-width": 2, "class": "cons-core" }, pg);
+    el("circle", { r: 16, fill: "none", stroke: "#e6eefa", "stroke-opacity": ".7", "stroke-width": 1 }, pg);
+    el("circle", { r: 4, fill: "#e6eefa" }, pg);
     el("circle", { r: 22, fill: "none", stroke: "#fff", "stroke-opacity": 0, "stroke-width": 2, "class": "cons-ring" }, pg);
-    var pt = el("text", { y: 46, "text-anchor": "middle", "class": "cons-label" }, pg); pt.textContent = S.researchHub.title;
+    var pt = el("text", { y: 48, "text-anchor": "middle", "class": "cons-label" }, pg); pt.textContent = S.researchHub.title.toUpperCase();
     cons.planet = { g: pg, x: L.planet.x, y: L.planet.y, ph: 1.7 };
 
     cons.stars = L.pts.map(function(p, i){
       var s = S.steps[i], need = s.needsResearch;
       var g = el("g", { "class": "cons-star", role: "link", tabindex: "0", "data-go": s.id, "aria-label": "Step "+(i+1)+": "+s.title+(need?" (needs research)":"") }, svg);
-      el("circle", { r: 30, fill: need ? "url(#haloR)" : "url(#haloN)" }, g);
-      el("line", { x1: -20, x2: 20, y1: 0, y2: 0, stroke: need ? "#ffd98f" : "#cfdcff", "stroke-opacity": ".55", "stroke-width": 1 }, g);
-      el("line", { y1: -20, y2: 20, x1: 0, x2: 0, stroke: need ? "#ffd98f" : "#cfdcff", "stroke-opacity": ".55", "stroke-width": 1 }, g);
-      el("circle", { r: 12, fill: need ? "#ffe2a0" : "#e4ecff", "class": "cons-core" }, g);
-      el("circle", { r: 12, fill: "none", stroke: "#fff", "stroke-opacity": 0, "stroke-width": 2, "class": "cons-ring" }, g);
-      var n = el("text", { y: 4.2, "text-anchor": "middle", "class": "cons-num" }, g); n.textContent = i+1;
-      var lx = 0, ly = 0, anchor = "middle";
-      if(p.label==="below"){ ly = 30; } else if(p.label==="above"){ ly = -20; }
-      else if(p.label==="right"){ lx = 20; ly = 4; anchor = "start"; } else { lx = -20; ly = 4; anchor = "end"; }
-      var t = el("text", { x: lx, y: ly, "text-anchor": anchor, "class": "cons-label" }, g); t.textContent = s.title;
-      return { g: g, x: p.x, y: p.y, ph: rnd(0,6.28), fx: rnd(0.0003,0.0006), fy: rnd(0.00025,0.0005), amp: rnd(3.5,8) };
+      el("circle", { r: 13, fill: need ? "#ffe2a0" : "#1b4a88", stroke: need ? "#ffd98f" : "#dbe8f7", "stroke-width": 1.6, "class": "cons-core" }, g);
+      if(!need){ el("circle", { r: 9.5, fill: "none", stroke: "#dbe8f7", "stroke-opacity": ".45", "stroke-width": 1 }, g); }
+      el("circle", { r: 13, fill: "none", stroke: "#fff", "stroke-opacity": 0, "stroke-width": 2, "class": "cons-ring" }, g);
+      var n = el("text", { y: 4.2, "text-anchor": "middle", "class": "cons-num" + (need ? " need" : "") }, g); n.textContent = i+1;
+      var title = s.title.toUpperCase();
+      var tw = textW(title) - 8;
+      var lx = 0, ly = 0, anchor = "middle", sh;
+      if(p.label==="below"){ sh = "M0 13 V22 M"+(-tw/2)+" 22 H"+(tw/2); ly = 35; }
+      else if(p.label==="above"){ sh = "M0 -13 V-22 M"+(-tw/2)+" -22 H"+(tw/2); ly = -26; }
+      else if(p.label==="right"){ sh = "M13 0 H"+(22+tw); lx = 22; ly = -4; anchor = "start"; }
+      else { sh = "M-13 0 H"+(-22-tw); lx = -22; ly = -4; anchor = "end"; }
+      el("path", { d: sh, "class": "cons-shelf" }, g);
+      var t = el("text", { x: lx, y: ly, "text-anchor": anchor, "class": "cons-label" }, g); t.textContent = title;
+      return { g: g, x: p.x, y: p.y, ph: rnd(0,6.28), fx: rnd(0.0003,0.0006), fy: rnd(0.00025,0.0005), amp: 0 };
     });
     cons.mode = w >= 760 ? "wide" : "narrow";
     frame(performance.now(), true);
   }
 
   function frame(t, once){
-    var A = reduce ? 0 : 5;
+    var A = 0;
     cons.stars.forEach(function(s){
       var am = reduce ? 0 : s.amp;
       s.cx = s.x + Math.sin(t*s.fx + s.ph)*am; s.cy = s.y + Math.cos(t*s.fy + s.ph*1.3)*am;
@@ -4278,6 +4310,7 @@ window.SITE = {
   var PANELS = ["tab-home","tab-step","tab-research","tab-acs","tab-psychographics","tab-buying","tab-page","tab-helper","tab-missions","tab-games","tab-exemplars"];
   function show(route){
     var panel, nav = "home";
+    if(route.indexOf("missions")===0 || route.indexOf("games")===0){ route = "home"; } /* Missions and Games are hidden for now */
     if(route in stepIdx){ panel="tab-step"; renderStep(route); if(window.renderFinder){ try{ window.renderFinder(route); }catch(e){} } }
     else if(route.indexOf("missions")===0){ panel="tab-missions"; nav="missions"; if(window.renderMissions){ window.renderMissions(route.split("-").slice(1)); } }
     else if(route.indexOf("games")===0){ panel="tab-games"; nav="games"; if(window.renderGames){ window.renderGames(route.split("-").slice(1)); } }
