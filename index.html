@@ -1075,6 +1075,36 @@
   .bp-res-type{ font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color: var(--accent); }
   .bp-res-title{ font-family: var(--font-display); font-weight:600; font-size:15.5px; }
   .bp-res-note{ font-size:13px; color: var(--ink-2); }
+
+  /* Start with your customer */
+  .cu-home-link{ margin-top:10px; background:none; border:0; padding:10px 2px; min-height:44px; color:#fff; font:600 15px var(--font-body); text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+  .cu-wrap{ max-width:860px; }
+  .cu-steps{ display:flex; gap:6px; flex-wrap:wrap; margin:0 0 14px; padding:0; list-style:none; }
+  .cu-steps button{ min-height:44px; padding:6px 12px; border-radius:999px; border:1px solid var(--border-strong); background:var(--surface); color:var(--ink); font:600 14px var(--font-body); cursor:pointer; }
+  .cu-steps button[aria-current="step"]{ background:var(--accent); color:#fff; border-color:var(--accent); }
+  .cu-card{ background:var(--surface); border:1px solid var(--border-strong); border-radius:10px; padding:18px 20px; }
+  .cu-card h2{ margin:0 0 4px; font:700 22px var(--font-display); color:var(--ink); }
+  .cu-card .cu-q{ margin:0 0 14px; color:var(--ink); font-size:16px; }
+  .cu-group{ margin:0 0 14px; }
+  .cu-group > .cu-lbl{ display:block; margin:0 0 6px; font:600 12px var(--font-mono); letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft, #4a5b6e); }
+  .cu-opts{ display:flex; flex-wrap:wrap; gap:8px; }
+  .cu-opt{ min-height:44px; padding:8px 14px; border-radius:8px; border:1px solid var(--border-strong); background:var(--surface); color:var(--ink); font:600 15px var(--font-body); cursor:pointer; text-align:left; }
+  .cu-opt small{ display:block; font-weight:400; font-size:12px; opacity:.8; }
+  .cu-opt[aria-pressed="true"]{ background:var(--accent); color:#fff; border-color:var(--accent); }
+  .cu-big{ font:700 clamp(34px,8vw,56px)/1.05 var(--font-display); color:var(--accent); margin:4px 0; }
+  .cu-math{ font-family:var(--font-mono); font-size:15px; background:var(--bg); border-left:3px solid var(--accent); padding:10px 12px; margin:10px 0; overflow-wrap:anywhere; }
+  .cu-note{ font-size:14px; color:var(--ink); opacity:.85; margin:8px 0; }
+  .cu-in{ display:flex; flex-wrap:wrap; gap:12px; margin:0 0 12px; }
+  .cu-in label{ display:flex; flex-direction:column; gap:4px; font:600 13px var(--font-body); }
+  .cu-in input{ min-height:44px; width:140px; padding:6px 10px; font:16px var(--font-body); border:1px solid var(--border-strong); border-radius:6px; background:#fff; color:var(--ink); }
+  .cu-nav{ display:flex; justify-content:space-between; gap:10px; margin-top:16px; flex-wrap:wrap; }
+  .cu-nav button, .cu-btn{ min-height:44px; padding:8px 18px; border-radius:8px; border:1px solid var(--accent); background:var(--surface); color:var(--accent); font:700 15px var(--font-body); cursor:pointer; }
+  .cu-nav button.primary, .cu-btn.primary{ background:var(--accent); color:#fff; }
+  .cu-list{ margin:0 0 10px; padding-left:20px; } .cu-list li{ margin:6px 0; }
+  .cu-links{ display:flex; flex-wrap:wrap; gap:8px; margin:8px 0; }
+  .cu-links a, .cu-links button{ display:inline-flex; align-items:center; min-height:44px; padding:6px 14px; border-radius:8px; border:1px solid var(--border-strong); background:var(--surface); color:var(--accent); font:600 14px var(--font-body); text-decoration:none; cursor:pointer; }
+  .cu-sum{ background:var(--bg); border:1px dashed var(--border-strong); padding:12px 14px; border-radius:8px; margin-top:10px; white-space:pre-wrap; font-size:14px; }
+  @media (max-width:520px){ .cu-card{ padding:14px; } .cu-in input{ width:100%; } .cu-in label{ flex:1 1 130px; } }
 </style>
 
 <svg class="sky-fixed" id="skyFixed" aria-hidden="true"></svg>
@@ -1082,7 +1112,7 @@
   <header class="site-masthead" id="siteMast"><svg class="sky-mast" id="skyMast" aria-hidden="true"></svg>
     <h1 id="siteTitle" class="sr-only"></h1>
     <div class="mast-row"><div class="intro" id="siteTagline"></div>
-    <div class="big-go-wrap"><button type="button" class="big-go" data-go="research"><span class="big-go-main">Start here: find your evidence in the Research Hub</span><span class="big-go-sub">Census numbers, spending, competitors, and how to run your own research &rarr;</span></button></div></div>
+    <div class="big-go-wrap"><button type="button" class="big-go" data-go="research"><span class="big-go-main">Start here: find your evidence in the Research Hub</span><span class="big-go-sub">Census numbers, spending, competitors, and how to run your own research &rarr;</span></button><button type="button" class="cu-home-link" data-go="customer">Not sure where to start? Begin with your customer</button></div></div>
     <div class="cons-wrap" id="consWrap">
       <p class="cons-caption" id="consCaption"></p>
       <div id="consSvg" class="cons-svg"></div>
@@ -1119,6 +1149,7 @@
   <div class="tab-panel" id="tab-step" hidden><div id="stepHost"></div></div>
   <div class="tab-panel" id="tab-missions" hidden><div id="missionsHost"></div></div>
   <div class="tab-panel" id="tab-exemplars" hidden><div id="exemplarsHost"></div></div>
+  <div class="tab-panel" id="tab-customer" hidden><div id="customerHost"></div></div>
   <div class="tab-panel" id="tab-games" hidden><div id="gamesHost"></div></div>
   <div class="tab-panel" id="tab-page" hidden><div id="pageHost"></div></div>
   <div class="tab-panel" id="tab-helper" hidden><div id="helperSub"></div><div id="helperHost"></div></div>
@@ -1129,6 +1160,8 @@
       <h2 class="tab-h1" id="researchTitle"></h2>
       <p class="tagline" id="researchTagline"></p>
     </section>
+
+    <section class="callout-block"><h3>Not sure where to start?</h3><p>Start with your customer. Pick who they are, then see how many of them there are, how much they spend, and what industry you are in. Takes about 5 minutes. <button type="button" class="bp-link" data-go="customer">Start with your customer</button></p></section>
 
     <section class="callout-block"><h3>Not sure what to look up?</h3><p>Use the Research Helper: describe your idea or build a question from menus, and see where to find the evidence. <button type="button" class="bp-link" data-go="helper">Open the Research Helper</button></p></section>
 
@@ -1452,7 +1485,49 @@
   var byArea = {};
   HEADLINE.forEach(function(row){ byArea[row.area] = row; });
 
+  // ---- "All Bay Area counties": built in the browser from the 9 county rows ----
+  // Counts are summed exactly. Each percentage is recomputed as (summed count) / (summed base),
+  // where each county's base is count / percent. Medians cannot be added, so they are
+  // approximate weighted averages and are flagged as such in the tool.
+  var ALL_BAY = "All Bay Area counties (9 combined)";
+  (function(){
+    var rows = HEADLINE.filter(function(r){ return r.tier === "Bay Area"; });
+    if (!rows.length) return;
+    var agg = { tier: "Bay Area", area: ALL_BAY, approx: true };
+    var sum = function(k){ return rows.reduce(function(a, r){ return a + (r[k] || 0); }, 0); };
+    var wavg = function(k, w){
+      var num = 0, den = 0;
+      rows.forEach(function(r){ var wt = r[w] || 0; if (r[k] !== null && r[k] !== undefined){ num += r[k] * wt; den += wt; } });
+      return den ? num / den : null;
+    };
+    agg.total_population = sum("total_population");
+    agg.households = sum("households");
+    agg.median_age = wavg("median_age", "total_population");
+    agg.median_household_income = wavg("median_household_income", "households");
+    agg.avg_household_size = agg.total_population && agg.households ? wavg("avg_household_size", "households") : null;
+    agg.median_gross_rent_monthly = wavg("median_gross_rent_monthly", "n_renter_occupied");
+    Object.keys(rows[0]).forEach(function(k){
+      if (k.indexOf("pct_") !== 0) return;
+      var nk = "n_" + k.slice(4), n = 0, base = 0;
+      rows.forEach(function(r){
+        n += r[nk] || 0;
+        if (r[k] > 0 && r[nk] > 0) base += r[nk] / (r[k] / 100);
+      });
+      agg[nk] = n;
+      agg[k] = base ? Math.round(n / base * 1000) / 10 : null;
+    });
+    HEADLINE_ALL_BAY = agg;
+  })();
+  var HEADLINE_ALL_BAY;
+  if (HEADLINE_ALL_BAY){
+    byArea[ALL_BAY] = HEADLINE_ALL_BAY;
+    window.hubDemo = { byArea: byArea, ALL_BAY: ALL_BAY };
+    tiersToAreas["Bay Area"].unshift(ALL_BAY);
+    MOE[ALL_BAY] = { median_age: null, population: null, median_income: null, avg_household_size: null, median_rent: null };
+  }
+
   function shortLabel(tier, area){
+    if (area === ALL_BAY) return "All Bay Area counties";
     if (tier === "San Francisco" && area !== "San Francisco (citywide)"){
       // "San Francisco County (Northeast)--Chinatown, North Beach & Russian Hill" -> "Chinatown, North Beach & Russian Hill"
       var parts = area.split("--");
@@ -1752,7 +1827,10 @@
       var card = document.createElement("div");
       card.className = "stat-card";
       var html = '<div class="stat-label">' + f.label + '</div>';
-      html += '<div class="stat-value">' + f.fmt(primary[f.key]) + '</div>';
+      html += '<div class="stat-value">' + (primary.approx && f.key.indexOf("median") === 0 ? "~" : "") + f.fmt(primary[f.key]) + '</div>';
+      if (primary.approx && (f.key.indexOf("median") === 0)){
+        html += '<div class="stat-moe">approximate (weighted average of 9 counties)</div>';
+      }
       if (compare){
         html += '<div class="stat-compare">' + deltaSpan(primary[f.key], compare[f.key], f.fmt) + shortLabel(state.compareTier, state.compareArea) + '</div>';
       }
@@ -1816,6 +1894,13 @@
   }
 
   function renderMoePanel(){
+    if (state.area === ALL_BAY){
+      els.moePanel.innerHTML = '<h2>About the All Bay Area numbers</h2><ul class="moe-list">' +
+        '<li><strong>Population and households</strong> are exact sums of the 9 counties, and every percentage is recomputed from the combined counts.</li>' +
+        '<li><strong>Median age, income and rent</strong> cannot be added across counties, so they are shown with a ~ as an approximate average weighted by population or households. For an exact regional median, use the Census Bureau table for the 9-county area. Pick a single county to see its official median and margin of error.</li>' +
+        '</ul>';
+      return;
+    }
     var moeEntry = MOE[state.area] || {};
     var label = shortLabel(state.tier, state.area);
     var items = [];
@@ -4156,6 +4241,163 @@ window.SITE = {
 </script>
 
 <script id="exemplarsData">window.HUB_EXEMPLARS={"biz":{"dbx":{"name":"DocBox","tag":"National 2024","type":"Product","result":"Finalist","v":"jGBtv6z_Sfc","p":1891},"sb":{"name":"Scholar Brilliance","tag":"National 2024","type":"App","result":"1st place","v":"jGBtv6z_Sfc","p":2665},"am":{"name":"Almndmlk (Almond Milk)","tag":"National 2024","type":"Product","result":"Finalist","v":"jGBtv6z_Sfc","p":3412},"tp":{"name":"Trust Point","tag":"Southeast Regional 2026","type":"App","result":"1st place","v":"ze4UjqTsr8s","p":505},"nn":{"name":"NICU Nest","tag":"Southeast Regional 2026","type":"App","result":"3rd place","v":"ze4UjqTsr8s","p":1318},"cu":{"name":"Curinet","tag":"Southeast Regional 2026","type":"Product","result":"2nd place","v":"ze4UjqTsr8s","p":2056},"po":{"name":"Polyite","tag":"Southeast Regional 2025","type":"App","result":"3rd place","v":"5zvHWDKCW-o","p":594},"ha":{"name":"Halo","tag":"Southeast Regional 2025","type":"App","result":"2nd place","v":"5zvHWDKCW-o","p":1354},"pa":{"name":"Pawable","tag":"Southeast Regional 2025","type":"Product","result":"1st place","v":"5zvHWDKCW-o","p":2121}},"rows":[{"b":"tp","s":"Problem/Opportunity","e":"No data","g":"Weak","f":0,"t":572,"c":"Misinformation and bias spread faster than the truth, and people distrust what they read.","ev":"None. Opens by contrasting today's information with any past generation; says news organizations engineer headlines to fit a bias.","n":"Relatable opening, but no number, survey or source shows how big the problem is.","q":"We have more information at our fingertips than any generation in history. Yet, we have never been more divided."},{"b":"tp","s":"Value Proposition","e":"Story or example only","g":"Okay","f":0,"t":639,"c":"Showing every side of a story, with bias indicators and side-by-side views, helps people see the full picture.","ev":"Prototype screen only.","n":"The value is stated in one plain sentence and shown on a prototype screen, but nothing shows customers want it.","q":"We share every side of the story."},{"b":"tp","s":"Target Market","e":"No data","g":"Weak","f":0,"t":705,"c":"The target market is a global digital audience ages 15 to 60, with 145 million in the target market and 15 million as the market size.","ev":"Population figures (333 million total, 145 million target, 15 million market size) with no source named.","n":"Uses all four textbook segments and a funnel of three market numbers, but never says where they came from, and 'ages 15 to 60, really anyone' is not a specific customer.","q":""},{"b":"tp","s":"Competitive Analysis","e":"Competitor search","g":"Okay","f":0,"t":773,"c":"Apple News and Google News have reach but lack reliability and transparency; Trust Point is strong in every category; the happy news section is unique.","ev":"Names Apple News, Google News and Ground News and what each focuses on. The comparison chart is on screen but not explained.","n":"Names real competitors and makes one fair distinction (Ground News focuses on political bias), but the self-rating 'strong in all categories' has no evidence behind it.","q":""},{"b":"nn","s":"Problem/Opportunity","e":"Story or example only","g":"Okay","f":1,"t":1357,"c":"Families of NICU babies are overwhelmed with information and anxious, and no app is built for them.","ev":"The founders' own NICU stay; two statistics with no source named; a count of NICU babies per year that is garbled in the captions.","n":"A lived-experience story (the founders were NICU babies) plus two statistics makes a strong opening, but the statistics have no named source.","q":"Parents retain less than 20%% of medical information they're given and 70%% of mothers report anxiety."},{"b":"nn","s":"Value Proposition","e":"No data","g":"Okay","f":0,"t":1434,"c":"NICU Nest is the first all-in-one digital companion for NICU families, from admission to discharge.","ev":"Feature list. A working prototype with 10 screens is mentioned later.","n":"Each feature (chatbot, twin mode, family text alerts, discharge tracker) answers a problem named earlier, but 'the first all-in-one' is not backed up.","q":""},{"b":"nn","s":"Target Market","e":"No data","g":"Okay","f":1,"t":1485,"c":"The total market is 48 million NICU families in the US, 12 million are reachable, and 5,020 users in Miami are the year-one goal.","ev":"Three market sizes with no source named. The labels are garbled in the captions.","n":"Splits customers into parents, extended family and healthcare providers, then narrows a funnel from 48 million to 12 million to 5,020 users in Miami, though no source is named.","q":""},{"b":"nn","s":"Competitive Analysis","e":"No data","g":"Weak","f":0,"t":1578,"c":"NICU Nest is the first app to combine tracking, education, AI support and emotional wellness.","ev":"A comparison chart on screen. No competitor named aloud.","n":"The pitch shows a chart but says only that it is the first all-in-one app; no competitor is named in the presentation.","q":""},{"b":"nn","s":"Competitive Analysis","e":"Competitor search","g":"Weak","f":0,"t":1848,"c":"Two competitors exist, but they are not as updated or as cared for as NICU nurses.","ev":"Names two competing apps when asked. No data on how they compare.","n":"In Q&A, only when a judge asks do they name two competitors, and the claim that those apps are 'not as updated' has no evidence.","q":""},{"b":"cu","s":"Problem/Opportunity","e":"","g":"Okay","f":1,"t":2128,"c":"Many people in Africa lack access to healthcare, and rural areas lack doctors and resources.","ev":"Cites a named source (Health Policy Watch). Population figures differ across the pitch (see the target market).","n":"Names a source for the problem, which is rare in this set, but the numbers in the captions do not agree with each other.","q":""},{"b":"cu","s":"Target Market","e":"No data","g":"Okay","f":1,"t":2294,"c":"The target market is the 103 million people in rural Africa, about 55%% of the continent, with NGOs and drug companies as the paying customers.","ev":"A population figure with no source named. The captions give different numbers earlier; check the video.","n":"Separates paying customers (NGOs and pharmaceutical companies) from the people who benefit for free, but gives no evidence that those funders want it.","q":"The end users are those who will benefit from my innovation freely."},{"b":"cu","s":"Competitive Analysis","e":"No data","g":"Weak","f":0,"t":2376,"c":"Telemedicine apps are the main competitors, and Curinet works offline where they cannot.","ev":"No competitor named; no comparison data.","n":"Names a category (telemedicine apps) instead of specific competitors, and the one advantage claimed, working offline, is not compared with anything.","q":"Telemedicine apps are our main competitors. However, [Curinet] has an advantage since it can work offline."},{"b":"dbx","s":"Problem/Opportunity","e":"Story or example only","g":"Okay","f":0,"t":1933,"c":"Many US counties lack adequate healthcare, and over a third of Americans lack nearby trauma centers, pharmacies, hospitals or low-cost health centers (as she states it).","ev":"A trip to a small Alaska town with no doctor; two statistics from 'my research' (80%% of counties, 9%% primary care deserts) with no source named.","n":"A memorable personal story (a town with a skate park but no doctor) leads into specific figures, but the figures' source is not named in the pitch.","q":"They didn't have a single doctor, but you know what they did have? A skate park."},{"b":"dbx","s":"Target Market","e":"No data","g":"Weak","f":0,"t":2061,"c":"The target market is people ages 6 to 65, healthcare groups and local governments, especially underserved rural and island areas.","ev":"None in the pitch. A number appears only when a judge asks (see the next card).","n":"The market is described very broadly (ages 6 to 65, public and private groups, local governments, remote areas) and no number or source is given in the pitch itself.","q":""},{"b":"dbx","s":"Target Market","e":"","g":"Strong","f":0,"t":2353,"c":"The target market is 49 million people, about 14%% of the population, mostly older people in rural communities.","ev":"Named sources: the Health Resources and Services Administration and the CDC.","n":"In Q&A, asked to narrow the market, she gives a number (49 million, about 14%% of the population), names two sources and picks a focus (older rural patients).","q":"My target market is 49 million people, which is about 14%% of the population."},{"b":"dbx","s":"Competitive Analysis","e":"Competitor search","g":"Strong","f":0,"t":2123,"c":"DocBox beats hospitals, telehealth software and local machines on access to remote areas, equipment quality, community integration and retention.","ev":"Hospitals at $1,000 to $2,000 a visit and 10.5 miles away on average; telehealth at $40 to $90 a visit; free blood pressure machines in grocery stores. Sources not named.","n":"Covers three kinds of alternative (hospitals, telehealth, free pharmacy machines) with a price and a distance for each, then four advantages, though the sources are not named.","q":""},{"b":"sb","s":"Problem/Opportunity","e":"Story or example only","g":"Okay","f":1,"t":2715,"c":"College is too expensive, scholarships exist, but the application process is so hard that money goes unclaimed.","ev":"College costs up over 180%% since 1980; over $7 billion in scholarships each year; a large amount unclaimed (the figure is unclear in the captions); three pains from her own experience. No sources named.","n":"Builds the problem in steps (college cost, scholarship money available, money unclaimed, three specific pains from her own experience), though the figures have no named sources.","q":""},{"b":"sb","s":"Value Proposition","e":"","g":"Strong","f":0,"t":2775,"c":"An AI essay coach, a task organizer and a success tracker solve the three problems of applying for scholarships.","ev":"Logic only: each tool maps to a pain named earlier.","n":"Each of three tools answers one of the three pains named in the problem section, so the solution follows directly from the evidence.","q":""},{"b":"sb","s":"Target Market","e":"No data","g":"Okay","f":0,"t":2843,"c":"The target market is about 19 million high school seniors to college seniors in the US, plus schools and districts.","ev":"A size with a reason for the age range. No source named.","n":"Defines the customer (high school seniors through college seniors), explains why the range ends at college seniors (scholarships renew yearly) and gives a size, but names no source.","q":""},{"b":"sb","s":"Competitive Analysis","e":"Competitor search","g":"Strong","f":1,"t":2891,"c":"Competitors only help match students to scholarships; Scholar Brilliance covers the whole process.","ev":"Names scholarships.com, Bold.org and a third competitor (the name is garbled in the captions); a check-mark table. A price figure is unclear in the captions.","n":"Names three competitors, says exactly what they do (match students to scholarships) and what they skip (essays, deadlines, follow-up), and shows a feature table.","q":"Scholar Brilliance is the only tool designed to help students from start to finish."},{"b":"am","s":"Problem/Opportunity","e":"Story or example only","g":"Weak","f":0,"t":3460,"c":"Traditional desserts harm health and the environment, and demand for vegan options is growing faster than supply.","ev":"A family story; general statements about saturated fat and dairy's impact; 'the vegan market is growing' with no figure or source.","n":"The family story is vivid, but the health and environment claims and the 'vegan market is growing' claim have no numbers or sources.","q":"My mom was pregnant and vegan. She craved a lot of sweets, but she still wanted to maintain her vegan diet."},{"b":"am","s":"Target Market","e":"Observation","g":"Okay","f":0,"t":3596,"c":"Customers are ages 16 to 30 with some income who live in West Los Angeles.","ev":"Observation of who buys at the farmers market (explained in Q&A). No survey or census number.","n":"Names an age range and four neighborhoods and builds a persona; in Q&A she explains the range comes from who actually buys her cakes at farmers markets.","q":""},{"b":"am","s":"Competitive Analysis","e":"No data","g":"Okay","f":1,"t":3662,"c":"Other cake businesses have few vegan options or sell at ordinary prices; this one is vegan, high quality and reasonably priced.","ev":"Two competitors named, spelled differently in the captions; no price or feature comparison.","n":"Names two local cake businesses and one clear difference (high quality vegan cakes at a reasonable price), but gives no prices or comparison.","q":""},{"b":"po","s":"Problem/Opportunity","e":"Interview","g":"Strong","f":0,"t":604,"c":"Political offices want to reach high schoolers but cannot, and a large group of young voters is untapped.","ev":"A turnout figure (77%% of ages 18 to 29 did not vote in 2022); 8 million new voters this year; an interview with the director of a campaign consulting firm. Sources for the numbers not named.","n":"Pairs a specific voting figure and a count of new voters with a conversation with a campaign consulting director, so the problem is backed by both numbers and a customer-side voice.","q":"77%% of youth ages 18 to 29 did not vote in the 2022 midterm elections."},{"b":"po","s":"Value Proposition","e":"","g":"Okay","f":0,"t":668,"c":"Political offices will get data analytics about high school students to reach upcoming voters and raise youth turnout.","ev":"A prototype dashboard on a laminated handout for the judges.","n":"Says exactly what the customer gets (youth data and analytics to reach upcoming voters) and hands judges a laminated prototype, but nothing shows campaigns want it.","q":""},{"b":"po","s":"Target Market","e":"Interview","g":"Strong","f":0,"t":768,"c":"Customers are Florida state parties, offices and politicians, who spend most of their budget on outreach.","ev":"Counts: 260,000 students, 10,400 politicians, 191 offices, 15 state parties; feedback from campaign managers; a campaign spending figure. Sources not named.","n":"Counts each kind of customer (students, politicians, offices, state parties in Florida), changes the plan after feedback from campaign managers, and shows they can pay (about 70%% of a $2.1 million budget goes to voter outreach).","q":""},{"b":"po","s":"Competitive Analysis","e":"Competitor search","g":"Okay","f":1,"t":848,"c":"A national polling platform and a survey tool exist, but neither gives district-specific youth political data.","ev":"A direct competitor (the name is garbled in the captions) and SurveyMonkey; a $349 billion big data market figure.","n":"Names a direct and an indirect competitor and one clear difference (data specific to congressional districts), but adds a $349 billion market figure that says nothing about the competition.","q":""},{"b":"po","s":"Competitive Analysis","e":"","g":"Strong","f":0,"t":1167,"c":"App-based collection reaches Gen Z better than random phone calls.","ev":"Reasoning about the competitor's method; no test shown.","n":"In Q&A, asked how the data differs, she explains a specific weakness in the competitor's method (random phone calls miss people without phones) and why an app avoids it.","q":""},{"b":"ha","s":"Problem/Opportunity","e":"Story or example only","g":"Okay","f":0,"t":1370,"c":"Car crashes are a crisis: millions of accidents, over two million injured or disabled a year, and a leading cause of death for young adults.","ev":"The founder's own crash; three figures (6 million accidents, over 2 million injured or disabled, leading cause of death ages 15 to 29) with no source named.","n":"A personal crash story opens it, followed by three national figures, but none of the figures has a named source.","q":""},{"b":"ha","s":"Target Market","e":"","g":"Strong","f":1,"t":1483,"c":"Car manufacturers spend heavily on safety features and will buy this.","ev":"A figure from a named foundation (the name is garbled in the captions): $85 billion invested in car safety in 2023.","n":"The customer is a business (car makers) and the pitch backs that with a named source for how much they already spend on safety, though the source name is garbled.","q":""},{"b":"ha","s":"Competitive Analysis","e":"No data","g":"Okay","f":0,"t":1573,"c":"Tesla's driver assistance and Waymo only work with their own vehicles; Halo works with all vehicles and lets cars talk to each other.","ev":"Named competitors; one unsupported claim.","n":"Names two real competitors and one fair distinction (they only work in their own vehicles; Halo works across all of them), but the claim that one has 'failed' for 16 years has no evidence.","q":""},{"b":"ha","s":"Target Market","e":"No data","g":"Weak","f":0,"t":1873,"c":"Older cars will be replaced by newer ones, so the market will grow.","ev":"An assumption with no data on how long people keep cars.","n":"In Q&A, a judge points out that older cars lack the sensors; the answer is that people replace cars every few years, which is an assumption, and the judge has to ask again about retrofitting.","q":""},{"b":"pa","s":"Problem/Opportunity","e":"Observation","g":"Okay","f":0,"t":2138,"c":"People with disabilities miss out on pets because they cannot bend to care for them or afford help.","ev":"Her own observations in her community.","n":"Names four specific problems she saw in her own community (loneliness, lack of companionship, limited mobility, cost), but no numbers yet; the survey comes later.","q":""},{"b":"pa","s":"Value Proposition","e":"","g":"Strong","f":0,"t":2193,"c":"An adaptive pet bowl lets owners feed pets without bending, and does more than existing long-handled bowls.","ev":"A comparison with current adaptive bowls.","n":"Says what the product does, who it is for and how it differs from what exists (current adaptive bowls only add a long handle).","q":""},{"b":"pa","s":"Target Market","e":"Survey","g":"Strong","f":0,"t":2298,"c":"Elderly people with mobility problems and middle-income pet owners struggle most with feeding.","ev":"Her own survey of over 50 people: 75%% said feeding was hardest; all of them thought the product could help.","n":"Backs the customer with her own survey (over 50 people): 75%% named feeding as the hardest task, and all of those said the product could help.","q":"From over 50 surveys, 75%% of them listed feeding as their most difficult task."},{"b":"pa","s":"Competitive Analysis","e":"Competitor search","g":"Okay","f":1,"t":2346,"c":"Existing products help with bending but none help you feed the pet.","ev":"Types of competing products; a pet industry figure that is garbled in the captions; her family connections to the problem.","n":"Describes the competition by type (long-handled bowls, raised stands) and the gap (none help you feed the pet), but the market-size figure is unclear and says nothing about competitors.","q":""},{"b":"pa","s":"Target Market","e":"Survey","g":"Okay","f":0,"t":2522,"c":"Patients at the clinic where her mother works want the product.","ev":"Survey responses and conversations with clinic patients; stated interest only.","n":"In Q&A, asked about physical therapy clinics, she says people there who took her survey said they want it, which is real interest but not yet a purchase.","q":""}]};</script>
+<script id="customerScript">
+(function(){
+  var host = document.getElementById("customerHost");
+  if(!host) return;
+  var AGES = [
+    {k:"pct_under_18", n:"n_under_18", t:"Under 18", s:"kids and teens"},
+    {k:"pct_age_18_24", n:"n_age_18_24", t:"18 to 24", s:"young adults"},
+    {k:"pct_age_25_34", n:"n_age_25_34", t:"25 to 34", s:"early career"},
+    {k:"pct_age_35_64", n:"n_age_35_64", t:"35 to 64", s:"working adults, parents"},
+    {k:"pct_age_65_plus", n:"n_age_65_plus", t:"65 and older", s:"seniors"},
+    {k:"all", n:"total_population", t:"Everyone", s:"all ages"}
+  ];
+  var AREAS = [
+    {a:"San Francisco (citywide)", t:"San Francisco", s:"the city"},
+    {a:"ALL", t:"Bay Area", s:"9 counties"},
+    {a:"California", t:"California", s:"the state"},
+    {a:"United States", t:"United States", s:"the country"}
+  ];
+  var REACH = [1,5,10,25];
+  var SECTORS = [
+    {q:"I sell products I buy or collect (clothes, snacks, accessories)", n:"Retail Trade", c:"44-45", note:"Selling goods to the public. Resellers and online shops land here."},
+    {q:"I make products myself (candles, jewelry, food products)", n:"Manufacturing", c:"31-33", note:"Making things. Food sold from a store you run is Retail; made in bulk to sell on is Manufacturing."},
+    {q:"I run a food or drink business (catering, a stand, a cafe)", n:"Accommodation and Food Services", c:"72", note:"Restaurants, cafes, caterers, food trucks."},
+    {q:"I teach or tutor people", n:"Educational Services", c:"61", note:"Tutoring, test prep, lessons, classes."},
+    {q:"I help people with health, wellness or care", n:"Health Care and Social Assistance", c:"62", note:"Care, counseling, child care, senior care."},
+    {q:"I offer fun, sports, art or entertainment", n:"Arts, Entertainment and Recreation", c:"71", note:"Fitness, performance, games, events."},
+    {q:"I do a personal service (hair, nails, pet care, repair, cleaning)", n:"Other Services", c:"81", note:"Personal care, pet care, repair and maintenance."},
+    {q:"I design, advise or do technical work for clients", n:"Professional, Scientific and Technical Services", c:"54", note:"Design, photography studios, web work, consulting."},
+    {q:"I build an app, website, media or content", n:"Information", c:"51", note:"Software publishing, media, data and content."},
+    {q:"I move people or things (delivery, rides)", n:"Transportation and Warehousing", c:"48-49", note:"Delivery, couriers, storage."},
+    {q:"I rent out or manage property or equipment", n:"Real Estate and Rental and Leasing", c:"53", note:"Renting space, equipment or goods."},
+    {q:"I support other businesses (cleaning, staffing, admin help)", n:"Administrative and Support Services", c:"56", note:"Business support, cleaning, staffing."}
+  ];
+  /* everything lives in memory only: nothing is saved or sent */
+  var st = {step:1, age:null, area:null, reach:5, price:"", times:"", sector:null, copied:""};
+  var STEPS = ["Who", "How many", "How much", "Industry", "Next steps"];
+  function esc(x){ return String(x).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+  function fmt(n){ return Math.round(n).toLocaleString("en-US"); }
+  function money(n){ return "$" + Math.round(n).toLocaleString("en-US"); }
+  function row(){ var d = window.hubDemo; if(!d || !st.area) return null; return d.byArea[st.area.a === "ALL" ? d.ALL_BAY : st.area.a] || null; }
+  function groupCount(){ var r = row(); if(!r || !st.age) return null; return r[st.age.n]; }
+  function customers(){ var g = groupCount(); return g == null ? null : g * st.reach / 100; }
+  function revenue(){ var c = customers(), p = parseFloat(st.price), t = parseFloat(st.times); if(c == null || !(p >= 0) || !(t >= 0)) return null; return c * p * t; }
+  function who(){ return st.age ? (st.age.k === "all" ? "people of all ages" : "people ages " + st.age.t.toLowerCase()) : ""; }
+  function summary(){
+    var r = row(), g = groupCount(), lines = [];
+    if(!r || g == null) return "";
+    lines.push("My customer: " + who() + " in " + st.area.t + ".");
+    lines.push("Market size: about " + fmt(g) + " people (Census ACS, 5-year estimate).");
+    lines.push("Realistic reach in year one: " + st.reach + "% = about " + fmt(customers()) + " customers.");
+    var rev = revenue();
+    if(rev != null) lines.push("Possible yearly sales: " + fmt(customers()) + " x " + money(st.price) + " x " + st.times + " times a year = " + money(rev) + ".");
+    if(r.median_household_income) lines.push("Median household income in " + st.area.t + ": about " + money(r.median_household_income) + ".");
+    if(st.sector) lines.push("Industry: " + st.sector.n + " (NAICS " + st.sector.c + ").");
+    return lines.join("\n");
+  }
+  function opts(list, cur, key, label){
+    return list.map(function(o, i){
+      var on = cur && (cur.k === o.k && cur.a === o.a);
+      return '<button type="button" class="cu-opt" aria-pressed="' + (on ? "true" : "false") + '" data-cu="' + key + '" data-i="' + i + '">' + esc(o.t) + '<small>' + esc(o.s) + '</small></button>';
+    }).join("");
+  }
+  function s1(){
+    return '<h2>Who is your customer?</h2><p class="cu-q">Pick the group that is closest to your archetypal customer. You can change it later.</p>'
+      + '<div class="cu-group"><span class="cu-lbl">Age group</span><div class="cu-opts">' + opts(AGES, st.age, "age") + '</div></div>'
+      + '<div class="cu-group"><span class="cu-lbl">Where do they live?</span><div class="cu-opts">' + opts(AREAS, st.area, "area") + '</div></div>'
+      + '<p class="cu-note">The Census counts people by age and place. It cannot count "people who like sneakers". You will narrow that down with your own research in step 5.</p>';
+  }
+  function s2(){
+    var g = groupCount();
+    if(g == null) return '<h2>How many customers are out there?</h2><p class="cu-q">Pick an age group and a place in step 1 first.</p>';
+    var c = customers();
+    return '<h2>How many customers are out there?</h2><p class="cu-q">Start with everyone who fits, then shrink to the people you could really reach.</p>'
+      + '<div class="cu-big">' + fmt(g) + '</div><p class="cu-note">' + esc(who()) + ' in ' + esc(st.area.t) + '. This is your biggest possible market, not your real one.</p>'
+      + '<div class="cu-group"><span class="cu-lbl">What share could you realistically reach in year one?</span><div class="cu-opts">'
+      + REACH.map(function(r){ return '<button type="button" class="cu-opt" aria-pressed="' + (st.reach === r ? "true" : "false") + '" data-cu="reach" data-i="' + r + '">' + r + '%</button>'; }).join("") + '</div></div>'
+      + '<div class="cu-math">' + fmt(g) + ' people x ' + st.reach + '% = <strong>about ' + fmt(c) + ' customers</strong></div>'
+      + '<p class="cu-note">Why does this matter? A big number is not a plan. Judges want to see you shrank it on purpose and can say why. For a school-sized or neighborhood-sized business, 1% to 5% is more believable than 25%.</p>'
+      + '<div class="cu-links"><button type="button" data-go="acs/people">See more about them in Demographics</button></div>';
+  }
+  function s3(){
+    var r = row(), c = customers();
+    if(c == null) return '<h2>How much can they spend?</h2><p class="cu-q">Pick an age group and a place in step 1 first.</p>';
+    var rev = revenue();
+    return '<h2>How much can they spend?</h2><p class="cu-q">Try your own numbers. Nothing you type here is saved.</p>'
+      + '<div class="cu-in"><label>Price of one purchase ($)<input type="number" inputmode="decimal" min="0" step="any" id="cuPrice" value="' + esc(st.price) + '"></label>'
+      + '<label>Purchases per customer per year<input type="number" inputmode="decimal" min="0" step="any" id="cuTimes" value="' + esc(st.times) + '"></label></div>'
+      + '<div class="cu-math" id="cuRev">' + revLine(rev, c) + '</div>'
+      + (r && r.median_household_income ? '<p class="cu-note">Context: the median household in ' + esc(st.area.t) + ' earns about ' + money(r.median_household_income) + ' a year' + (st.area.a === "ALL" ? " (approximate)" : "") + '. Check that your price makes sense for that income.</p>' : '')
+      + '<p class="cu-note">To check how much people in this area really spend on things like yours, look at the spending data.</p>'
+      + '<div class="cu-links"><button type="button" data-go="buying/spend">Business Landscape: Spending</button><button type="button" data-go="pricing">Pricing and Costs guide</button></div>';
+  }
+  function revLine(rev, c){
+    if(rev == null) return 'Enter a price and how often someone buys to see your possible yearly sales.';
+    return fmt(c) + ' customers x ' + money(st.price) + ' x ' + st.times + ' times = <strong>' + money(rev) + ' a year</strong>';
+  }
+  function s4(){
+    return '<h2>What industry are you in?</h2><p class="cu-q">Pick the sentence that sounds most like your business. You get the industry and its NAICS code, which you can use to count your competitors.</p>'
+      + '<div class="cu-opts" style="flex-direction:column;align-items:stretch">' + SECTORS.map(function(x, i){
+        return '<button type="button" class="cu-opt" aria-pressed="' + (st.sector === x ? "true" : "false") + '" data-cu="sector" data-i="' + i + '">' + esc(x.q) + '</button>'; }).join("") + '</div>'
+      + (st.sector ? '<div class="cu-math"><strong>' + esc(st.sector.n) + '</strong>: NAICS ' + esc(st.sector.c) + '<br>' + esc(st.sector.note) + '</div>' : '')
+      + '<div class="cu-links"><button type="button" data-go="naics">NAICS Guide</button><button type="button" data-go="buying/industry">Business Landscape: count competitors</button></div>'
+      + '<p class="cu-note">Some ideas fit more than one industry. Pick the one where most of your money would come from.</p>';
+  }
+  function s5(){
+    var sum = summary();
+    return '<h2>What you know, and what to ask next</h2><p class="cu-q">Public data gave you the size of the market. It cannot tell you what your customer wants. That part is your own research.</p>'
+      + (sum ? '<div class="cu-sum" id="cuSum">' + esc(sum) + '</div><div class="cu-links"><button type="button" class="cu-btn primary" data-cu="copy">Copy this summary</button><span class="cu-note" id="cuCopied">' + esc(st.copied) + '</span></div>' : '<p class="cu-note">Finish steps 1 to 4 to see your summary.</p>')
+      + '<h3 style="margin:14px 0 6px;font:700 16px var(--font-display)">Still unknown: ask your customer</h3><ul class="cu-list">'
+      + '<li>What do they use or do today to solve this problem?</li><li>What would they pay, and what do they pay now?</li><li>Where do they spend time, online and in person?</li><li>Would they switch? What would make them stay with what they use?</li></ul>'
+      + '<div class="cu-links"><button type="button" data-go="primary">Primary Research guide</button><button type="button" data-go="psychographics">Psychographics</button></div>'
+      + '<h3 style="margin:14px 0 6px;font:700 16px var(--font-display)">Where to look beyond this site</h3><ul class="cu-list">'
+      + '<li><a class="bp-link" href="https://data.census.gov" target="_blank" rel="noopener">data.census.gov</a>: more detailed tables, such as income by age.</li>'
+      + '<li><a class="bp-link" href="https://data.sf.gov" target="_blank" rel="noopener">data.sf.gov</a>: San Francisco business and neighborhood data.</li>'
+      + '<li><a class="bp-link" href="https://www.bls.gov/cex/" target="_blank" rel="noopener">BLS Consumer Expenditure</a>: what households spend on each kind of thing.</li>'
+      + '<li><a class="bp-link" href="https://trends.google.com" target="_blank" rel="noopener">Google Trends</a>: is interest in your idea growing?</li></ul>'
+      + '<p class="cu-note">Where this goes in your plan: Target Market (steps 1 to 3), Problem or Opportunity and Competitive Analysis (step 4), Cost Structure (price and sales).</p>';
+  }
+  function render(){
+    var body = [s1, s2, s3, s4, s5][st.step - 1]();
+    var pills = STEPS.map(function(t, i){ return '<li><button type="button" data-cu="step" data-i="' + (i + 1) + '"' + (st.step === i + 1 ? ' aria-current="step"' : '') + '>' + (i + 1) + '. ' + t + '</button></li>'; }).join("");
+    host.innerHTML = '<div class="cu-wrap"><section class="hero-block"><h1 class="tab-h1">Start with your customer</h1><p class="tagline">Optional. Five short steps that turn "my customer" into numbers you can put in your pitch. Nothing you pick or type is saved.</p></section>'
+      + '<ol class="cu-steps" aria-label="Steps">' + pills + '</ol><div class="cu-card">' + body
+      + '<div class="cu-nav">' + (st.step > 1 ? '<button type="button" data-cu="back">Back</button>' : '<span></span>')
+      + (st.step < 5 ? '<button type="button" class="primary" data-cu="next">Next</button>' : '<button type="button" data-go="research">Go to the Research Hub</button>') + '</div></div></div>';
+  }
+  host.addEventListener("click", function(e){
+    var b = e.target.closest("[data-cu]"); if(!b) return;
+    var k = b.getAttribute("data-cu"), i = +b.getAttribute("data-i");
+    if(k === "age") st.age = AGES[i];
+    else if(k === "area") st.area = AREAS[i];
+    else if(k === "reach") st.reach = i;
+    else if(k === "sector") st.sector = SECTORS[i];
+    else if(k === "step") st.step = i;
+    else if(k === "next") st.step = Math.min(5, st.step + 1);
+    else if(k === "back") st.step = Math.max(1, st.step - 1);
+    else if(k === "copy"){
+      var t = summary(), done = function(m){ st.copied = m; var c = document.getElementById("cuCopied"); if(c) c.textContent = m; };
+      try{ navigator.clipboard.writeText(t).then(function(){ done("Copied."); }, function(){ done("Select the text and copy it."); }); }catch(x){ done("Select the text and copy it."); }
+      return;
+    }
+    var pos = window.pageYOffset; render();
+    if(k === "step" || k === "next" || k === "back") window.scrollTo(0, 0); else window.scrollTo(0, pos);
+    var f = host.querySelector('[aria-pressed="true"], [aria-current="step"]');
+  });
+  host.addEventListener("input", function(e){
+    if(e.target.id === "cuPrice") st.price = e.target.value;
+    else if(e.target.id === "cuTimes") st.times = e.target.value;
+    else return;
+    var r = document.getElementById("cuRev"); if(r) r.innerHTML = revLine(revenue(), customers());
+  });
+  window.renderCustomer = function(sub){
+    var n = parseInt(sub, 10); if(n >= 1 && n <= 5) st.step = n;
+    render();
+  };
+})();
+</script>
 <script id="exemplarsScript">
 (function(){
   "use strict";
@@ -4542,7 +4784,7 @@ window.SITE = {
   root.setProperty("--hue", Math.round(rnd(-14,14))+"deg");
 
   // ---- router
-  var PANELS = ["tab-home","tab-step","tab-research","tab-acs","tab-psychographics","tab-buying","tab-page","tab-helper","tab-missions","tab-games","tab-exemplars"];
+  var PANELS = ["tab-home","tab-step","tab-research","tab-acs","tab-psychographics","tab-buying","tab-page","tab-helper","tab-missions","tab-games","tab-exemplars","tab-customer"];
   function show(route){
     var panel, nav = "home", sub = "";
     var slash = route.indexOf("/"); if(slash > 0){ sub = route.slice(slash+1); route = route.slice(0, slash); }
@@ -4550,6 +4792,7 @@ window.SITE = {
     if(route in stepIdx){ panel="tab-step"; renderStep(route); if(window.renderFinder){ try{ window.renderFinder(route); }catch(e){} } }
     else if(route.indexOf("missions")===0){ panel="tab-missions"; nav="missions"; if(window.renderMissions){ window.renderMissions(route.split("-").slice(1)); } }
     else if(route.indexOf("games")===0){ panel="tab-games"; nav="games"; if(window.renderGames){ window.renderGames(route.split("-").slice(1)); } }
+    else if(route==="customer"){ panel="tab-customer"; nav="research"; if(window.renderCustomer){ window.renderCustomer(sub); } }
     else if(route==="exemplars"){ panel="tab-exemplars"; nav="exemplars"; if(window.renderExemplars){ window.renderExemplars(); } }
     else if(route==="helper"){ panel="tab-helper"; nav="research"; $("helperSub").innerHTML = subnav("helper"); if(window.renderHelperPage){ window.renderHelperPage(); } }
     else if(route==="research"){ panel="tab-research"; nav="research"; $("researchSub").innerHTML = subnav("research"); }
