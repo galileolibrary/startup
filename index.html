@@ -424,7 +424,7 @@
     transition: color 0.15s, border-color 0.15s;
   }
   .top-nav-btn:hover{ color: var(--ink-2); }
-  .top-nav-btn[aria-selected="true"]{
+  .top-nav-btn[aria-current="page"]{
     color: var(--accent);
     border-bottom-color: var(--accent);
   }
@@ -432,6 +432,8 @@
 
   /* ---- Exemplars */
   .ex-intro{ max-width:78ch; }
+  .ex-legend-d{ margin:6px 0; font-size:14px; } .ex-legend-d summary{ cursor:pointer; font-weight:600; color:var(--accent); min-height:32px; display:flex; align-items:center; }
+  .ex-bar{ margin:10px 0 6px; }
   .ex-legend{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; margin:14px 0 8px; }
   .ex-legend > div{ background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:10px 12px; font-size:14px; line-height:1.4; min-width:0; }
   .ex-bar{ display:flex; flex-wrap:wrap; gap:10px 22px; align-items:center; margin:18px 0 14px; }
@@ -786,7 +788,7 @@
   .bp-step-short{ font-size:13.5px; color: var(--ink-2); }
   .bp-tags{ display:flex; flex-wrap:wrap; gap:6px; margin-top:4px; }
   .bp-limit, .bp-need{ font-size:11.5px; font-weight:600; border-radius:999px; padding:2px 9px; border:1px solid var(--border-strong); color: var(--ink-2); }
-  .bp-need{ background: var(--accent-2-soft); border-color: transparent; color: var(--accent-2); }
+  .bp-need{ background: var(--accent-2-soft); border-color: transparent; color: #8a4d00; }
   .bp-feeds{ font-size:12.5px; color: var(--ink-2); margin-bottom:8px; }
   .bp-feeds-label{ font-weight:700; color: var(--ink); }
   .bp-stepper, .bp-subnav{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
@@ -1033,6 +1035,40 @@
   .cons-num.need{ fill:#2a1b00; }
   .cons-shelf{ stroke:#dbe8f7; stroke-opacity:.7; stroke-width:1; fill:none; }
   .cons-star:hover .cons-shelf, .cons-star:focus-visible .cons-shelf{ stroke-opacity:1; }
+
+  /* ===== Compact layout v3: slim header, sub-tabs ===== */
+  body:not(.is-home) .site-masthead{ display:none; }
+  .top-nav{ margin-bottom:10px; align-items:center; }
+  .top-nav-btn{ min-height:44px; padding:10px 16px; font-size:15px; }
+  .nav-title{ font-family:var(--font-display); font-weight:700; font-size:15px; color:var(--ink); margin-right:auto; padding:0 10px 0 2px; }
+  body.is-home .nav-title{ display:none; }
+  body.is-home .site-masthead{ margin:8px 0 10px; padding:14px clamp(16px,3vw,28px) 6px; }
+  .mast-row{ display:flex; flex-wrap:wrap; gap:10px 28px; align-items:center; justify-content:space-between; }
+  .mast-row .intro{ flex:1 1 420px; }
+  .site-masthead .intro p{ font-size:16px; line-height:1.45; margin:0 0 6px; }
+  .site-masthead .intro p:nth-child(n+3){ display:none; }
+  .big-go-wrap{ margin:0; flex:0 0 auto; }
+  .big-go{ width:auto; padding:12px 18px; box-shadow:4px 4px 0 rgba(10,30,70,.45); }
+  .big-go-main{ font-size:17px; }
+  .big-go-sub{ display:none; }
+  .cons-wrap{ margin-top:4px; }
+  .cons-caption{ display:none; }
+  .cons-legend{ margin:2px 0 0; font-size:12px; }
+  .tab-panel > header.masthead{ padding:2px 0 4px; margin:0; }
+  .tab-panel > header.masthead .eyebrow{ display:none; }
+  .tab-panel > header.masthead .tab-h1{ font-size:22px; margin:0 0 2px; }
+  .tab-panel > header.masthead .tagline{ display:none; }
+  .sub-tabs{ display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 12px; }
+  .sub-tab{ font-family:var(--font-body); font-size:14px; font-weight:600; min-height:44px; padding:8px 14px; border-radius:8px; border:1px solid var(--border-strong); background:var(--surface); color:var(--ink); cursor:pointer; }
+  .sub-tab[aria-selected="true"]{ background:var(--accent); color:#fff; border-color:var(--accent); }
+  .sub-off{ display:none !important; }
+  .subs-on .subsection-heading, .subs-on #breakdownSection > .section-title, .subs-on #breakdownSection > .section-sub{ display:none; }
+  .subs-on #breakdowns, .subs-on #schoolBreakdowns{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr)); gap:12px; align-items:start; }
+  .subs-on .breakdown-card{ margin-bottom:0; }
+  .subs-controls{ display:flex; flex-wrap:wrap; gap:8px 20px; align-items:flex-end; margin-bottom:10px; }
+  .subs-controls .tier-tabs{ margin-bottom:0; }
+  .subs-on .guide-grid{ grid-template-columns:1fr; }
+  @media (min-width: 900px){ #sfSnapshotResult{ column-count:2; column-gap:28px; } #sfSnapshotResult > *{ break-inside:avoid; } }
   .bp-res{ display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap:10px; margin-bottom: 20px; }
   .bp-res-card{ display:flex; flex-direction:column; gap:4px; text-decoration:none; background: var(--surface); border:1px solid var(--border); border-radius:12px; padding:12px 14px; color: var(--ink); }
   .bp-res-card:hover{ border-color: var(--accent); }
@@ -1045,8 +1081,8 @@
 <div class="page">
   <header class="site-masthead" id="siteMast"><svg class="sky-mast" id="skyMast" aria-hidden="true"></svg>
     <h1 id="siteTitle" class="sr-only"></h1>
-    <div class="intro" id="siteTagline"></div>
-    <div class="big-go-wrap"><button type="button" class="big-go" data-go="research"><span class="big-go-main">Start here: find your evidence in the Research Hub</span><span class="big-go-sub">Census numbers, spending, competitors, and how to run your own research &rarr;</span></button></div>
+    <div class="mast-row"><div class="intro" id="siteTagline"></div>
+    <div class="big-go-wrap"><button type="button" class="big-go" data-go="research"><span class="big-go-main">Start here: find your evidence in the Research Hub</span><span class="big-go-sub">Census numbers, spending, competitors, and how to run your own research &rarr;</span></button></div></div>
     <div class="cons-wrap" id="consWrap">
       <p class="cons-caption" id="consCaption"></p>
       <div id="consSvg" class="cons-svg"></div>
@@ -1055,9 +1091,10 @@
   </header>
 
   <nav class="top-nav" id="topNav" aria-label="Site sections">
-    <button class="top-nav-btn" data-tab="home" aria-selected="true" type="button">Plan Roadmap</button>
-    <button class="top-nav-btn" data-tab="research" aria-selected="false" type="button">Research Hub</button>
-    <button class="top-nav-btn" data-tab="exemplars" aria-selected="false" type="button">Exemplars</button>
+    <span class="nav-title" id="navTitle"></span>
+    <button class="top-nav-btn" data-tab="home" aria-current="page" type="button">Plan Roadmap</button>
+    <button class="top-nav-btn" data-tab="research" type="button">Research Hub</button>
+    <button class="top-nav-btn" data-tab="exemplars" type="button">Exemplars</button>
   </nav>
 
   <div class="tab-panel" id="tab-home">
@@ -4125,9 +4162,10 @@ window.SITE = {
   var D = window.HUB_EXEMPLARS; if(!D) return;
   var STEPS = ["Problem/Opportunity","Value Proposition","Target Market","Competitive Analysis"];
   var STEPLAB = {"Problem/Opportunity":"Problem / Opportunity","Competitive Analysis":"Competitors"};
-  var ICON = {Strong:"\u2714 ", Okay:"~ ", Weak:"\u2716 "};
+  var ICON = {Strong:"✔ ", Okay:"~ ", Weak:"✖ "};
   var TAGS = ["Southeast Regional 2026","Southeast Regional 2025","National 2024"];
-  var state = { view:"step", str:"All" };
+  var BIZ = []; TAGS.forEach(function(tag){ Object.keys(D.biz).forEach(function(k){ if(D.biz[k].tag===tag) BIZ.push(k); }); });
+  var state = { view:"step", step:STEPS[0], biz:BIZ[0], str:"All" };
   function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
   function link(b,t){ return "https://www.youtube.com/watch?v="+b.v+"&t="+t+"s"; }
   function mmss(t){ var m=Math.floor(t/60), s=t%60; return m+":"+(s<10?"0":"")+s; }
@@ -4141,34 +4179,32 @@ window.SITE = {
     h += '<div><div class="ex-k">The claim</div><p>'+esc(r.c)+'</p></div>';
     h += '<div><div class="ex-k">Evidence offered'+(r.e?'<span class="ex-chip">'+esc(r.e)+'</span>':'')+'</div><p>'+esc(r.ev)+'</p></div>';
     h += '<div><div class="ex-k">What to notice</div><p>'+esc(r.n)+'</p></div>';
-    if(r.q){ h += '<div class="ex-quote"><p>\u201C'+esc(r.q)+'\u201D</p></div>'; }
+    if(r.q){ h += '<div class="ex-quote"><p>“'+esc(r.q)+'”</p></div>'; }
     if(r.f){ h += '<div class="ex-flag">Some numbers or names here come from auto-captions. Check the video.</div>'; }
     h += '<a class="ex-watch" href="'+link(b,r.t)+'" target="_blank" rel="noopener">Watch at '+mmss(r.t)+' (opens YouTube)</a></article>';
     return h;
   }
   function keep(r){ return state.str==="All" || r.g===state.str; }
+  function rowsFor(key, val){ return D.rows.filter(function(r){ return r[key]===val && keep(r); }); }
+  function tabBtn(group,val,txt,cur){ return '<button type="button" class="sub-tab" role="tab" data-ex-'+group+'="'+esc(val)+'" aria-selected="'+(cur===val?"true":"false")+'">'+txt+'</button>'; }
   function body(){
-    var h = "", n = 0;
+    var rs, h;
     if(state.view==="step"){
-      STEPS.forEach(function(s){
-        var rs = D.rows.filter(function(r){ return r.s===s && keep(r); });
-        if(!rs.length) return;
-        n += rs.length;
-        h += '<h3 class="ex-h">'+esc(STEPLAB[s]||s)+'</h3><div class="ex-grid">'+rs.map(function(r){ return card(r,"step"); }).join("")+'</div>';
-      });
+      rs = rowsFor("s", state.step);
+      h = rs.length ? '<div class="ex-grid">'+rs.map(function(r){ return card(r,"step"); }).join("")+'</div>' : '';
     } else {
-      TAGS.forEach(function(tag){
-        Object.keys(D.biz).filter(function(k){ return D.biz[k].tag===tag; }).forEach(function(k){
-          var b = D.biz[k];
-          var rs = D.rows.filter(function(r){ return r.b===k && keep(r); }).sort(function(a,c){ return a.t-c.t; });
-          if(!rs.length) return;
-          n += rs.length;
-          h += '<div class="ex-bizhead"><h3>'+esc(label(b))+'</h3><span class="ex-meta">'+esc(b.type)+' \u00B7 '+esc(b.result)+' \u00B7 <a href="'+link(b,b.p)+'" target="_blank" rel="noopener" style="color:var(--accent);font-weight:700">Watch the whole pitch (opens YouTube)</a></span></div><div class="ex-grid">'+rs.map(function(r){ return card(r,"biz"); }).join("")+'</div>';
-        });
-      });
+      var b = D.biz[state.biz];
+      rs = rowsFor("b", state.biz).sort(function(a,c){ return a.t-c.t; });
+      h = '<div class="ex-bizhead"><h3>'+esc(label(b))+'</h3><span class="ex-meta">'+esc(b.type)+' · '+esc(b.result)+' · <a href="'+link(b,b.p)+'" target="_blank" rel="noopener" style="color:var(--accent);font-weight:700">Watch the whole pitch (opens YouTube)</a></span></div>'
+        + (rs.length ? '<div class="ex-grid">'+rs.map(function(r){ return card(r,"biz"); }).join("")+'</div>' : '');
     }
-    if(!n){ h = '<p class="ex-empty">No claims match that filter.</p>'; }
-    return h;
+    return h || '<p class="ex-empty">No claims match that filter here. Try "All."</p>';
+  }
+  function tabs(){
+    if(state.view==="step"){
+      return STEPS.map(function(s){ return tabBtn("step", s, esc(STEPLAB[s]||s)+' ('+rowsFor("s",s).length+')', state.step); }).join("");
+    }
+    return BIZ.map(function(k){ return tabBtn("biz", k, esc(D.biz[k].name.replace(/ \(.*\)$/,"")), state.biz); }).join("");
   }
   function btn(group,val,txt,cur){ return '<button type="button" class="ex-btn" data-ex-'+group+'="'+esc(val)+'" aria-pressed="'+(cur===val?"true":"false")+'">'+txt+'</button>'; }
   function render(){
@@ -4176,21 +4212,24 @@ window.SITE = {
     var total = D.rows.length, nb = Object.keys(D.biz).length;
     host.innerHTML =
       '<section class="hero-block"><h2 class="tab-h1">Exemplars</h2>'
-      + '<p class="section-sub ex-intro">Real pitches from NFTE competitions, broken into the individual claims each team made, with the evidence they offered and how well it held up. Use it to see what a plan section sounds like when it is done well, and when it is not. '+nb+' businesses, '+total+' claims. Each card has a link to the exact moment in the video.</p></section>'
-      + '<div class="ex-legend" role="list" aria-label="What the strength labels mean">'
-      + '<div role="listitem"><span class="ex-badge ex-Strong">'+ICON.Strong+'Strong</span><br>Specific and checkable: a named source, or math that follows from the team\u2019s own numbers.</div>'
+      + '<p class="section-sub ex-intro">Real NFTE pitches, broken into the claims each team made, the evidence they offered, and how well it held up. '+nb+' businesses, '+total+' claims. Each card links to that moment in the video.</p></section>'
+      + '<details class="ex-legend-d"><summary>What do Strong, Okay and Weak mean?</summary><div class="ex-legend" role="list">'
+      + '<div role="listitem"><span class="ex-badge ex-Strong">'+ICON.Strong+'Strong</span><br>Specific and checkable: a named source, or math that follows from the team’s own numbers.</div>'
       + '<div role="listitem"><span class="ex-badge ex-Okay">'+ICON.Okay+'Okay</span><br>Specific but unsourced, or relevant but not yet tested.</div>'
-      + '<div role="listitem"><span class="ex-badge ex-Weak">'+ICON.Weak+'Weak</span><br>Vague, unsupported, or unlikely to survive a judge\u2019s question.</div></div>'
-      + '<p class="hp-small">These labels are one reader\u2019s judgment of the evidence, not the competition judges\u2019 scores. Judges\u2019 comments are paraphrased.</p>'
+      + '<div role="listitem"><span class="ex-badge ex-Weak">'+ICON.Weak+'Weak</span><br>Vague, unsupported, or unlikely to survive a judge’s question.</div></div>'
+      + '<p class="hp-small">These labels are one reader’s judgment of the evidence, not the competition judges’ scores. Judges’ comments are paraphrased.</p></details>'
       + '<div class="ex-bar"><div class="ex-group" role="group" aria-label="Group claims by"><span class="ex-lab">Group by</span>'+btn("view","step","Plan step",state.view)+btn("view","biz","Business",state.view)+'</div>'
       + '<div class="ex-group" role="group" aria-label="Show claims rated"><span class="ex-lab">Show</span>'+btn("str","All","All",state.str)+btn("str","Strong","Strong",state.str)+btn("str","Okay","Okay",state.str)+btn("str","Weak","Weak",state.str)+'</div></div>'
+      + '<div class="sub-tabs" role="tablist" aria-label="Choose a '+(state.view==="step"?"plan step":"business")+'">'+tabs()+'</div>'
       + '<div id="exBody">'+body()+'</div>'
       + '<p class="ex-foot">Business names and some numbers were read from automatic captions and may be misspelled or off. Where a card says so, check the video. Each video belongs to NFTE and its competition hosts, and links open on YouTube.</p>';
   }
   document.addEventListener("click", function(e){
-    var el = e.target.closest("[data-ex-view],[data-ex-str]"); if(!el) return;
+    var el = e.target.closest("[data-ex-view],[data-ex-str],[data-ex-step],[data-ex-biz]"); if(!el || !el.closest("#exemplarsHost")) return;
     if(el.hasAttribute("data-ex-view")) state.view = el.getAttribute("data-ex-view");
-    else state.str = el.getAttribute("data-ex-str");
+    else if(el.hasAttribute("data-ex-str")) state.str = el.getAttribute("data-ex-str");
+    else if(el.hasAttribute("data-ex-step")) state.step = el.getAttribute("data-ex-step");
+    else state.biz = el.getAttribute("data-ex-biz");
     render();
   });
   window.renderExemplars = render;
@@ -4218,7 +4257,7 @@ window.SITE = {
   function chip(id, cls){ return '<button type="button" class="bp-chip '+(cls||"")+'" data-go="'+id+'">'+esc(labelFor(id))+'</button>'; }
 
   // ---- masthead
-  $("siteTitle").textContent = S.title;
+  $("siteTitle").textContent = S.title; $("navTitle").textContent = S.title;
   $("siteTagline").innerHTML = [
     "Use this website to guide you through the process of finding the information you need to create a great business plan.",
     "<strong>Every claim you make as part of your pitch needs to be backed up by evidence.</strong>",
@@ -4370,7 +4409,7 @@ window.SITE = {
   function layout(w){
     var n = S.steps.length, wide = w >= 760;
     if(wide){ var pad = 70, st = (w - 2*pad - 40)/(n-1);
-      return { h: 250, planet: { x: w-60, y: 200 }, pts: S.steps.map(function(_,i){ return { x: pad + i*st, y: 110, label: i%2===0 ? "above" : "below" }; }) }; }
+      return { h: 208, planet: { x: w-60, y: 158 }, pts: S.steps.map(function(_,i){ return { x: pad + i*st, y: 82, label: i%2===0 ? "above" : "below" }; }) }; }
     var gap = 52, h = 60 + (n-1)*gap + 110;
     return { h: h, planet: { x: w*0.5, y: h-48 }, pts: S.steps.map(function(_,i){ return { x: w*0.14, y: 34 + i*gap, label: "right" }; }) };
   }
@@ -4505,7 +4544,8 @@ window.SITE = {
   // ---- router
   var PANELS = ["tab-home","tab-step","tab-research","tab-acs","tab-psychographics","tab-buying","tab-page","tab-helper","tab-missions","tab-games","tab-exemplars"];
   function show(route){
-    var panel, nav = "home";
+    var panel, nav = "home", sub = "";
+    var slash = route.indexOf("/"); if(slash > 0){ sub = route.slice(slash+1); route = route.slice(0, slash); }
     if(route.indexOf("missions")===0 || route.indexOf("games")===0){ route = "home"; } /* Missions and Games are hidden for now */
     if(route in stepIdx){ panel="tab-step"; renderStep(route); if(window.renderFinder){ try{ window.renderFinder(route); }catch(e){} } }
     else if(route.indexOf("missions")===0){ panel="tab-missions"; nav="missions"; if(window.renderMissions){ window.renderMissions(route.split("-").slice(1)); } }
@@ -4520,9 +4560,11 @@ window.SITE = {
     if(panel!=="tab-games" && window.gamesStop){ window.gamesStop(); }
     PANELS.forEach(function(p){ $(p).hidden = (p!==panel); });
     Array.prototype.forEach.call(document.querySelectorAll(".top-nav-btn"), function(b){
-      b.setAttribute("aria-selected", b.getAttribute("data-tab")===nav ? "true":"false");
+      if(b.getAttribute("data-tab")===nav){ b.setAttribute("aria-current","page"); } else { b.removeAttribute("aria-current"); }
     });
+    document.body.classList.toggle("is-home", panel==="tab-home");
     if(panel==="tab-home"){ consShow(); } else { consHide(); }
+    if(window.hubSubs){ try{ window.hubSubs.enter(route, sub); }catch(e){} }
     buildSkies();
     window.scrollTo(0,0);
   }
@@ -4547,6 +4589,113 @@ window.SITE = {
 </script>
 
 
+
+<script id="subtabsScript">
+(function(){
+  "use strict";
+  function all(s,r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); }
+  function one(s,r){ return (r||document).querySelector(s); }
+  function txt(e){ return (e.textContent||"").replace(/\s+/g," ").trim(); }
+  function slug(t){ return t.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,24); }
+  function secOf(sel,P){ var e = one(sel,P); return e ? e.closest("section") : null; }
+  function hasText(P, sel, re){ return all(sel,P).filter(function(e){ return re.test(txt(e)); })[0] || null; }
+  var CFG = {
+    acs: { panel:"tab-acs", def:"glance", tabs:[
+      ["glance","At a glance"],["people","Age & family"],["money","Income & work"],["background","Education & background"],["housing","Housing & tech"],["school","Compare to a school"],["about","About the numbers"]],
+      tag:function(P){
+        var t=[], area=["glance","people","money","background","housing"];
+        var ctl = one("#tierTabs",P); if(ctl){ ctl = ctl.closest("section"); ctl.classList.add("subs-controls"); t.push([ctl,area]); }
+        t.push([secOf("#statGrid",P),["glance"]]);
+        t.push([one("#breakdownSection",P),["people","money","background","housing"]]);
+        var map=[[/^(Age groups|Marital status)/,"people"],[/^(Household income|Industry of employment|Getting to work)/,"money"],[/^(Education|Nativity|Race|Veteran|Disability)/,"background"],[/^(Housing|Household tech)/,"housing"]];
+        all("#breakdowns .breakdown-card",P).forEach(function(c){ var h=txt(one(".breakdown-title",c)||c); map.forEach(function(m){ if(m[0].test(h)) t.push([c,[m[1]]]); }); });
+        t.push([one("#schoolCompareSection",P),["school"]]);
+        t.push([one("#moePanel",P),["about"]]);
+        t.push([one("details.source-note",P),["about"]]);
+        t.push([one("footer",P),["about"]]);
+        return t; } },
+    buying: { panel:"tab-buying", def:"spend", tabs:[
+      ["spend","Spending"],["industry","Industry size"],["sf","Competitors in SF"],["beyond","Where else to look"]],
+      tag:function(P){
+        return [[one("#cexSection",P),["spend"]],[secOf("#cbpResult",P),["industry"]],[secOf("#sfSubTabs",P),["sf"]],[one("#hubLimits",P),["beyond"]],[one("#buyingPatternsGuide",P),["beyond"]]]; } },
+    psychographics: { panel:"tab-psychographics", def:"time", tabs:[
+      ["time","Time use (BLS)"],["social","Social media (Pew)"],["trends","Interest trends (Google)"],["claim","Turn it into a claim"]],
+      tag:function(P){
+        var t=[], cards=all("#psychographicsGuide .guide-card",P);
+        t.push([one("#psychographicsGuide",P),["time","social","trends"]]);
+        cards.forEach(function(c,i){ t.push([c,[["time","social","trends"][i]||"time"]]); });
+        t.push([one(".hypothesis-callout",P),["claim"]]);
+        return t; } }
+  };
+  var STEP = { panel:"tab-step", def:"write", tabs:[["write","What to write"],["example","Examples"],["data","Find your data"]],
+    anchor:function(P){ return one("h2.tab-h1",P); },
+    tag:function(P){
+      return [[one(".bp-ask",P),["write"]],[one(".bp-cols",P),["write"]],[hasText(P,"section",/^Example: weak vs/),["example"]],
+        [one("#finderHost",P),["data"]],[hasText(P,"section",/^Class materials/),["write"]],[hasText(P,"section.callout-block",/^Where to find evidence/),["data"]]]; } };
+  function pageCfg(P){
+    var blocks = all(".bp-block",P); if(blocks.length < 4) return null;
+    var tabs = blocks.map(function(b,i){ return [slug(txt(one("h3",b))||("part-"+i)), txt(one("h3",b))]; });
+    var note = one(".muted-callout",P); if(note) tabs.push(["notes","Keep in mind"]);
+    return { panel:"tab-page", def:tabs[0][0], tabs:tabs, tag:function(P){
+      var t = blocks.map(function(b,i){ return [b,[tabs[i][0]]]; });
+      if(note){ t.push([note,["notes"]]); }
+      var h = one("#pageHost > h3.section-title",P), c = one("#pageHost > .bp-chips",P); if(h) t.push([h,["notes"]]); if(c) t.push([c,["notes"]]);
+      return t; } };
+  }
+  function getCfg(route){
+    if(CFG[route]) return CFG[route];
+    var st = document.getElementById("tab-step"), pg = document.getElementById("tab-page");
+    if(st && !st.hidden) return STEP;
+    if(pg && !pg.hidden) return pageCfg(pg);
+    return null;
+  }
+  var state = {};
+  function bar(route, C){
+    var P = document.getElementById(C.panel);
+    var b = one(".sub-tabs",P);
+    if(!b){
+      b = document.createElement("div"); b.className = "sub-tabs"; b.setAttribute("role","tablist"); b.setAttribute("aria-label","Sections");
+      b.innerHTML = C.tabs.map(function(t){ return '<button type="button" class="sub-tab" role="tab" data-sub-key="'+t[0]+'" aria-selected="false" tabindex="-1">'+t[1].replace(/&/g,"&amp;")+'</button>'; }).join("");
+      var hdr = (C.anchor ? C.anchor(P) : one("header.masthead",P));
+      (hdr || P.firstElementChild).insertAdjacentElement("afterend", b);
+      b.addEventListener("click", function(e){ var t = e.target.closest(".sub-tab"); if(!t) return; select(route, C, t.getAttribute("data-sub-key"), true); });
+      b.addEventListener("keydown", function(e){
+        if(e.key!=="ArrowRight" && e.key!=="ArrowLeft") return;
+        var tabs = all(".sub-tab",b), i = tabs.indexOf(document.activeElement); if(i<0) return;
+        var n = tabs[(i + (e.key==="ArrowRight"?1:-1) + tabs.length) % tabs.length]; n.focus(); n.click(); e.preventDefault();
+      });
+    }
+    return b;
+  }
+  function paint(route, C){
+    var P = document.getElementById(C.panel), key = state[route];
+    P.classList.add("subs-on");
+    C.tag(P).forEach(function(x){ if(x[0]){ x[0].classList.toggle("sub-off", x[1].indexOf(key) < 0); } });
+    all(".sub-tab",bar(route,C)).forEach(function(t){ var on = t.getAttribute("data-sub-key")===key; t.setAttribute("aria-selected", on?"true":"false"); t.tabIndex = on?0:-1; });
+  }
+  function select(route, C, key, setHash){
+    if(!C.tabs.some(function(t){ return t[0]===key; })) key = C.def;
+    state[route] = key; paint(route, C);
+    if(setHash){ try{ history.replaceState(null,"","#"+route+"/"+key); }catch(e){} }
+  }
+  function watch(route, C){
+    var P = document.getElementById(C.panel);
+    if(P._subsWatch) return; P._subsWatch = true;
+    ["breakdowns","schoolBreakdowns","cbpResult","sfSnapshotView"].forEach(function(id){
+      var el = document.getElementById(id); if(!el) return;
+      new MutationObserver(function(){ if(!P.hidden && CFG[route]) paint(route, CFG[route]); }).observe(el,{childList:true});
+    });
+  }
+  window.hubSubs = { enter:function(route, sub){
+    ["tab-step","tab-page"].forEach(function(id){ var P = document.getElementById(id); if(P && P.hidden) P.classList.remove("subs-on"); });
+    var C = getCfg(route); if(!C) return;
+    if(CFG[route]) watch(route, C);
+    select(route, C, sub || state[route] || C.def, !!sub);
+  }};
+  (function(){ var h = location.hash.replace("#",""), i = h.indexOf("/"); var r = i>0 ? h.slice(0,i) : h; if(CFG[r]) window.hubSubs.enter(r, i>0 ? h.slice(i+1) : ""); })();
+})();
+</script>
+
 <script id="finderScript">
 (function(){
   "use strict";
@@ -4557,13 +4706,13 @@ window.SITE = {
   // ---- keyword rules: each maps words in the student's text to things worth looking up
   var RULES=[
    {k:/teen|student|high school|school|young|youth|kid|child|college|gen z|pocket money|allowance/, L:[
-     {q:"How many young people live in the area, and how many households have children?",t:ACS,m:"Demographics > Age groups (Under 18, 18 to 24) and Household income & poverty > Has children under 18",e:"Under 18 is ___% of people in ___ compared with ___% nationally.",l:"Counts people who live in an area, not how many have your problem."}]},
+     {q:"How many young people live in the area, and how many households have children?",t:ACS,m:"Demographics > Age & family > Age groups (Under 18, 18 to 24) and Household income & poverty > Has children under 18",e:"Under 18 is ___% of people in ___ compared with ___% nationally.",l:"Counts people who live in an area, not how many have your problem."}]},
    {k:/parent|baby|babies|toddler|family|families|mom|dad|childcare|daycare/, L:[
-     {q:"How common are households with children where you plan to sell?",t:ACS,m:"Demographics > Household income & poverty > Has children under 18",e:"Only ___% of households in San Francisco have children under 18, versus ___% nationally.",l:"San Francisco is far below the national share, so check whether your parents are common enough here."}]},
+     {q:"How common are households with children where you plan to sell?",t:ACS,m:"Demographics > Income & work > Household income & poverty > Has children under 18",e:"Only ___% of households in San Francisco have children under 18, versus ___% nationally.",l:"San Francisco is far below the national share, so check whether your parents are common enough here."}]},
    {k:/senior|elder|older|grandparent|retire|aging|aged/, L:[
      {q:"How many people are 65 or older, and how many have a disability or no computer?",t:ACS,m:"Age groups > 65 and older; Disability & health insurance; Business Landscape tools > Household tech & vehicles > Has a computer",e:"___% of residents are 65 and older, and ___% of households have no computer.",l:"Averages hide big differences between neighborhoods. Compare two."}]},
    {k:/afford|cheap|budget|low.?income|poor|poverty|save money|expensive|cost too much|free/, L:[
-     {q:"How many households have low income or live below the poverty line?",t:ACS,m:"Demographics > Household income & poverty > Under $50,000 and Below the poverty line",e:"___% of households earn under $50,000, which means ___.",l:"Income is a household number. It does not say what any one person can spend."}]},
+     {q:"How many households have low income or live below the poverty line?",t:ACS,m:"Demographics > Income & work > Household income & poverty > Under $50,000 and Below the poverty line",e:"___% of households earn under $50,000, which means ___.",l:"Income is a household number. It does not say what any one person can spend."}]},
    {k:/luxury|premium|rich|wealthy|high.?end|designer|invest/, L:[
      {q:"How many households could afford a higher price?",t:ACS,m:"Household income & poverty > $100,000 or more; Median household income tile",e:"___% of households earn $100,000 or more.",l:"San Francisco prices are high too, so compare with what the same households spend (Business Landscape)."}]},
    {k:/rent|apartment|housing|dorm|roommate|landlord|move|moving|storage|space/, L:[
@@ -4573,11 +4722,11 @@ window.SITE = {
    {k:/remote|work from home|laptop|study|cafe|coworking|focus|freelanc/, L:[
      {q:"How many people work from home and how many commute a long way?",t:ACS,m:"Geographics > Getting to work > Worked from home, Commute 30+ min",e:"___% of workers work from home.",l:"Work from home counts people with jobs. It does not count students."}]},
    {k:/immigrant|culture|cultural|language|spanish|chinese|filipino|mexican|asian|latin|arab|traditional|authentic|heritage|translate/, L:[
-     {q:"How many people were born abroad or speak another language at home?",t:ACS,m:"Demographics > Nativity & language > Foreign-born, Speaks only English at home; Race & ethnicity",e:"___% of residents are foreign-born and ___% speak a language other than English at home.",l:"Be careful. Culture and ethnicity do not decide what a person buys. Use it to find where a community lives, then ask them."}]},
+     {q:"How many people were born abroad or speak another language at home?",t:ACS,m:"Demographics > Education & background > Nativity & language > Foreign-born, Speaks only English at home; Race & ethnicity",e:"___% of residents are foreign-born and ___% speak a language other than English at home.",l:"Be careful. Culture and ethnicity do not decide what a person buys. Use it to find where a community lives, then ask them."}]},
    {k:/health|sick|doctor|insurance|disab|medical|pain|sleep|stress|mental|dental|braces|skin|hair|acne|allerg/, L:[
-     {q:"How many people have a disability or no health insurance, and what do households spend on health?",t:ACS,m:"Demographics > Disability & health insurance; Business Landscape > Consumer spending (BLS CEX) > Healthcare",e:"___% have a disability and the average household spends $___ a year on healthcare.",l:"The ACS does not measure specific conditions like acne or dry hair. Use a survey for that."}]},
+     {q:"How many people have a disability or no health insurance, and what do households spend on health?",t:ACS,m:"Demographics > Education & background > Disability & health insurance; Business Landscape > Spending (BLS CEX) > Healthcare",e:"___% have a disability and the average household spends $___ a year on healthcare.",l:"The ACS does not measure specific conditions like acne or dry hair. Use a survey for that."}]},
    {k:/fitness|gym|workout|exercise|sport|dance|active|stretch|athlete|football|soccer|basketball|yoga/, L:[
-     {q:"How many people are in your age group, and what is spent on sports and entertainment?",t:ACS,m:"Demographics > Age groups; Business Landscape > Consumer spending > Entertainment > Fees and admissions",e:"___% are 18 to 24 and households spend $___ a year on fees and admissions.",l:"Spending categories are broad. Fees and admissions is not only fitness."}]},
+     {q:"How many people are in your age group, and what is spent on sports and entertainment?",t:ACS,m:"Demographics > Age & family > Age groups; Business Landscape > Spending > Entertainment > Fees and admissions",e:"___% are 18 to 24 and households spend $___ a year on fees and admissions.",l:"Spending categories are broad. Fees and admissions is not only fitness."}]},
    {k:/phone|app|tech|computer|internet|wifi|digital|software|online|ai\b|artificial|game|gaming|stream/, L:[
      {q:"How many households have a computer and internet?",t:BUY,m:"Business Landscape tools > Household tech & vehicles > Has a computer, Has an internet subscription",e:"___% of households have an internet subscription.",l:"Most SF households do, so this rarely proves a problem. Use it to show your users can reach you."},
      {q:"What do households spend on audio and visual equipment and services?",t:BUY,m:"Consumer spending (BLS CEX) > Entertainment > Audio and visual equipment and services",e:"Households spend $___ a year on audio and visual equipment and services.",l:"Spending on apps is not tracked separately."}]},
@@ -4590,9 +4739,9 @@ window.SITE = {
    {k:/pet|dog|cat\b|animal|collar|leash/, L:[
      {q:"How much do households spend on pets?",t:BUY,m:"Consumer spending (BLS CEX) > Entertainment > Pets, toys, hobbies and playground equipment > Pets (national only)",e:"U.S. households spend $___ a year on pets.",l:"Pet spending is available for the U.S. only, not San Francisco."}]},
    {k:/book|read|author|writer|novel|library|learn|tutor|class|education|teach|exam|college prep|homework|skill/, L:[
-     {q:"How much do households spend on education and reading, and how educated is the area?",t:BUY,m:"Consumer spending > Education, Reading; Demographics > Education",e:"Households spend $___ a year on education and $___ on reading.",l:"This is total spending, not spending on your specific kind of learning."}]},
+     {q:"How much do households spend on education and reading, and how educated is the area?",t:BUY,m:"Consumer spending > Education, Reading; Demographics > Education & background > Education",e:"Households spend $___ a year on education and $___ on reading.",l:"This is total spending, not spending on your specific kind of learning."}]},
    {k:/job|work|career|hustle|earn|employ|intern|hire|worker|side/, L:[
-     {q:"What industries do people work in, and how many young people are in the workforce?",t:ACS,m:"Demographics > Industry of employment; Age groups",e:"The largest industry here is ___, which employs ___%.",l:"ACS industry is for workers 16 and older. It does not show who wants a side hustle."}]},
+     {q:"What industries do people work in, and how many young people are in the workforce?",t:ACS,m:"Demographics > Income & work > Industry of employment; Age groups",e:"The largest industry here is ___, which employs ___%.",l:"ACS industry is for workers 16 and older. It does not show who wants a side hustle."}]},
    {k:/eco|green|waste|trash|recycl|sustain|environment|climate|compost|plastic|natural|organic/, L:[
      {q:"What do people already care about, and how do your customers feel about the environment?",t:PSY,m:"Psychographics tool (values and interests)",e:"People who ___ tend to care about ___.",l:"Psychographics describe attitudes, so check your source and its sample."}]}
   ];
@@ -4814,37 +4963,37 @@ window.SITE = {
 
   /* ---------- measures (Census ACS) ---------- */
   var M = [
-    ["Age", "under_18","people under 18","residents","are under 18","acs","Demographics > Age groups","Under 18 includes children of every age, not only teens."],
-    ["Age", "age_18_24","young adults 18 to 24","residents","are 18 to 24","acs","Demographics > Age groups","College students and young workers are both in this group."],
-    ["Age", "age_25_34","adults 25 to 34","residents","are 25 to 34","acs","Demographics > Age groups",""],
-    ["Age", "age_35_64","adults 35 to 64","residents","are 35 to 64","acs","Demographics > Age groups",""],
-    ["Age", "age_65_plus","people 65 and older","residents","are 65 or older","acs","Demographics > Age groups",""],
-    ["Households and money", "households_with_children_under_18","households with children under 18","households","have children under 18","acs","Demographics > Household income & poverty","San Francisco has far fewer households with children than the U.S., so check this before you build for parents."],
-    ["Households and money", "households_income_under_50k","households earning under $50,000","households","earn under $50,000","acs","Demographics > Household income & poverty","Income is for the whole household, not one person."],
-    ["Households and money", "households_income_100k_plus","households earning $100,000 or more","households","earn $100,000 or more","acs","Demographics > Household income & poverty","Income is for the whole household, not one person."],
-    ["Households and money", "below_poverty_level","people below the poverty line","residents","live below the poverty line","acs","Demographics > Household income & poverty",""],
-    ["People and learning", "bachelors_degree_plus","people with a bachelor's degree or higher","adults","have a bachelor's degree or higher","acs","Demographics > Education","Education is counted for adults, not students."],
-    ["People and learning", "hs_diploma_or_higher","people with a high school diploma or higher","adults","have a high school diploma or higher","acs","Demographics > Education","Education is counted for adults, not students."],
-    ["People and learning", "foreign_born","foreign-born residents","residents","were born outside the U.S.","acs","Demographics > Nativity & language","Being foreign-born does not tell you what a person buys. Use it to find where a community lives, then ask them."],
-    ["People and learning", "english_only_at_home","people who speak only English at home","residents","speak only English at home","acs","Demographics > Nativity & language",""],
-    ["Health", "with_disability","people with a disability","residents","have a disability","acs","Demographics > Disability & health insurance","The Census counts broad types of disability, not specific conditions."],
-    ["Health", "with_health_insurance","people with health insurance","residents","have health insurance","acs","Demographics > Disability & health insurance",""],
+    ["Age", "under_18","people under 18","residents","are under 18","acs","Demographics > Age & family > Age groups","Under 18 includes children of every age, not only teens."],
+    ["Age", "age_18_24","young adults 18 to 24","residents","are 18 to 24","acs","Demographics > Age & family > Age groups","College students and young workers are both in this group."],
+    ["Age", "age_25_34","adults 25 to 34","residents","are 25 to 34","acs","Demographics > Age & family > Age groups",""],
+    ["Age", "age_35_64","adults 35 to 64","residents","are 35 to 64","acs","Demographics > Age & family > Age groups",""],
+    ["Age", "age_65_plus","people 65 and older","residents","are 65 or older","acs","Demographics > Age & family > Age groups",""],
+    ["Households and money", "households_with_children_under_18","households with children under 18","households","have children under 18","acs","Demographics > Income & work > Household income & poverty","San Francisco has far fewer households with children than the U.S., so check this before you build for parents."],
+    ["Households and money", "households_income_under_50k","households earning under $50,000","households","earn under $50,000","acs","Demographics > Income & work > Household income & poverty","Income is for the whole household, not one person."],
+    ["Households and money", "households_income_100k_plus","households earning $100,000 or more","households","earn $100,000 or more","acs","Demographics > Income & work > Household income & poverty","Income is for the whole household, not one person."],
+    ["Households and money", "below_poverty_level","people below the poverty line","residents","live below the poverty line","acs","Demographics > Income & work > Household income & poverty",""],
+    ["People and learning", "bachelors_degree_plus","people with a bachelor's degree or higher","adults","have a bachelor's degree or higher","acs","Demographics > Education & background > Education","Education is counted for adults, not students."],
+    ["People and learning", "hs_diploma_or_higher","people with a high school diploma or higher","adults","have a high school diploma or higher","acs","Demographics > Education & background > Education","Education is counted for adults, not students."],
+    ["People and learning", "foreign_born","foreign-born residents","residents","were born outside the U.S.","acs","Demographics > Education & background > Nativity & language","Being foreign-born does not tell you what a person buys. Use it to find where a community lives, then ask them."],
+    ["People and learning", "english_only_at_home","people who speak only English at home","residents","speak only English at home","acs","Demographics > Education & background > Nativity & language",""],
+    ["Health", "with_disability","people with a disability","residents","have a disability","acs","Demographics > Education & background > Disability & health insurance","The Census counts broad types of disability, not specific conditions."],
+    ["Health", "with_health_insurance","people with health insurance","residents","have health insurance","acs","Demographics > Education & background > Disability & health insurance",""],
     ["Getting around", "commute_public_transit","workers who take public transit","workers","take public transit to work","acs","Geographics > Getting to work","This counts workers 16 and older, not students."],
     ["Getting around", "commute_walk_or_bike","workers who walk or bike","workers","walk or bike to work","acs","Geographics > Getting to work","This counts workers 16 and older, not students."],
     ["Getting around", "commute_drive_alone","workers who drive alone","workers","drive alone to work","acs","Geographics > Getting to work","This counts workers 16 and older, not students."],
     ["Getting around", "work_from_home","workers who work from home","workers","work from home","acs","Geographics > Getting to work","This counts workers 16 and older, not students."],
     ["Getting around", "commute_30_min_plus","workers with a commute of 30+ minutes","workers","commute 30 minutes or more","acs","Geographics > Getting to work","This counts workers 16 and older, not students."],
-    ["Getting around", "household_no_vehicle","households with no vehicle","households","have no vehicle","buying","Business Landscape > Household tech & vehicles",""],
+    ["Getting around", "household_no_vehicle","households with no vehicle","households","have no vehicle","buying","Demographics > Housing & tech > Household tech & vehicles",""],
     ["Homes and tech", "renter_occupied","homes that are rented","occupied homes","are rented","acs","Geographics > Housing",""],
     ["Homes and tech", "owner_occupied","homes that are owned","occupied homes","are owned","acs","Geographics > Housing",""],
     ["Homes and tech", "moved_in_past_year","people who moved in the past year","residents","moved in the past year","acs","Geographics > Housing",""],
-    ["Homes and tech", "household_has_computer","households with a computer","households","have a computer","buying","Business Landscape > Household tech & vehicles","Nearly every household has one, so this rarely proves a problem."],
-    ["Homes and tech", "household_has_internet","households with an internet subscription","households","have an internet subscription","buying","Business Landscape > Household tech & vehicles","Nearly every household has one, so this rarely proves a problem."],
-    ["Work", "industry_retail_trade","workers in retail","employed workers","work in retail","acs","Demographics > Industry of employment",""],
-    ["Work", "industry_arts_food_service","workers in arts, entertainment and food service","employed workers","work in arts, entertainment or food service","acs","Demographics > Industry of employment",""],
-    ["Work", "industry_education_healthcare","workers in education and healthcare","employed workers","work in education or healthcare","acs","Demographics > Industry of employment",""],
-    ["Work", "industry_information","workers in information and tech","employed workers","work in information","acs","Demographics > Industry of employment",""],
-    ["Work", "industry_professional_scientific_mgmt","workers in professional, scientific and management jobs","employed workers","work in professional, scientific or management jobs","acs","Demographics > Industry of employment",""]
+    ["Homes and tech", "household_has_computer","households with a computer","households","have a computer","buying","Demographics > Housing & tech > Household tech & vehicles","Nearly every household has one, so this rarely proves a problem."],
+    ["Homes and tech", "household_has_internet","households with an internet subscription","households","have an internet subscription","buying","Demographics > Housing & tech > Household tech & vehicles","Nearly every household has one, so this rarely proves a problem."],
+    ["Work", "industry_retail_trade","workers in retail","employed workers","work in retail","acs","Demographics > Income & work > Industry of employment",""],
+    ["Work", "industry_arts_food_service","workers in arts, entertainment and food service","employed workers","work in arts, entertainment or food service","acs","Demographics > Income & work > Industry of employment",""],
+    ["Work", "industry_education_healthcare","workers in education and healthcare","employed workers","work in education or healthcare","acs","Demographics > Income & work > Industry of employment",""],
+    ["Work", "industry_information","workers in information and tech","employed workers","work in information","acs","Demographics > Income & work > Industry of employment",""],
+    ["Work", "industry_professional_scientific_mgmt","workers in professional, scientific and management jobs","employed workers","work in professional, scientific or management jobs","acs","Demographics > Income & work > Industry of employment",""]
   ].map(function(a){ return { group:a[0], key:a[1], label:a[2], denom:a[3], verb:a[4], tool:a[5], card:a[6], limit:a[7] }; });
   var MBY = {}; M.forEach(function(m){ MBY[m.key] = m; });
 
@@ -5196,7 +5345,7 @@ window.SITE = {
 
   var INFER = {
     customer:[["college",/college|young adult|campus/],["parents",/parent|baby|toddler|famil|childcare|daycare/],["older",/senior|elder|older|grandparent|retire/],["commuters",/commut|bus\b|transit|scooter|bike|umbrella|rain|parking|traffic/],["active",/athlete|sport|fitness|gym|dance|workout|football|yoga|stretch/],["biz",/small business|owner|cafe owner|worker|employee|hire|entrepreneur/],["pet",/\bpet|dog|cat\b|collar/],["shopper",/cloth|fashion|beauty|makeup|style|outfit|jeans|hoodie|jewelry/],["foodie",/food|eat|meal|coffee|boba|cook|recipe|restaurant|snack|soup/],["renters",/rent|apartment|dorm|roommate|storage|move/],["lowinc",/afford|cheap|budget|low.?income|poor|underserved/],["artist",/artist|author|writer|music|instrument|paint|book/],["teens",/teen|high school|student|school|locker|homework/]],
-    area:[["food",/food|eat|meal|coffee|cafe|boba|cook|recipe|restaurant|snack|soup|nutrition|drink/],["fashion",/cloth|fashion|beauty|makeup|style|outfit|jeans|hoodie|jacket|hijab|skincare|hair/],["fitness",/fitness|gym|sport|dance|workout|health|stretch|exercise|court/],["gadgets",/gadget|device|tool|locker|pillow|glass|container|keychain|home|phone|\bcase|charger|backpack|\bbag/],["eco",/eco|waste|trash|recycl|sustain|compost|plastic|natural|green|fertilizer|soap/],["education",/educat|learn|tutor|study|teach|exam|skill/],["community",/rent|share|sharing|lend|borrow|community|access|volunteer/],["career",/job|career|hustle|earn|intern|hire|worker/],["organize",/organiz|planner|binder|notebook|clutter/],["services",/service|clean|photograph|pet care|repair|laundry/],["apps",/\bapp\b|software|website|platform|\bai\b|online/],["fun",/game|gaming|social|lounge|arcade|fun|entertain/],["pets",/\bpet|dog|cat\b/]],
+    area:[["food",/food|eat|meal|coffee|cafe|boba|cook|recipe|restaurant|snack|soup|nutrition|drink/],["fashion",/cloth|sneaker|shoe|fashion|beauty|makeup|style|outfit|jeans|hoodie|jacket|hijab|skincare|hair/],["fitness",/fitness|gym|sport|dance|workout|health|stretch|exercise|court/],["gadgets",/gadget|device|tool|locker|pillow|glass|container|keychain|home|phone|\bcase|charger|backpack|\bbag/],["eco",/eco|waste|trash|recycl|sustain|compost|plastic|natural|green|fertilizer|soap/],["education",/educat|learn|tutor|study|teach|exam|skill/],["community",/rent|share|sharing|lend|borrow|community|access|volunteer|swap|trade|resale|second-?hand|thrift|\bused\b/],["career",/job|career|hustle|earn|intern|hire|worker/],["organize",/organiz|planner|binder|notebook|clutter/],["services",/service|clean|photograph|pet care|repair|laundry/],["apps",/\bapp\b|software|website|platform|\bai\b|online/],["fun",/game|gaming|social|lounge|arcade|fun|entertain/],["pets",/\bpet|dog|cat\b/]],
     problem:[["money",/afford|cheap|save money|expens|cost|price|budget|pocket money|earn|income|side hustle/],["time",/fast|quick|save time|hassle|wait|easy|convenien/],["access",/access|underserved|rent instead|share|can't afford|cannot afford/],["health",/health|sick|pain|sleep|skin|hair|stress|medical|dry|braces|floss/],["style",/looks|look good|style|fashion|aesthetic|express|custom/],["learning",/learn|study|tutor|skill|teach|exam|read|author/],["fun",/fun|game|social|hang out|lounge|play/],["env",/eco|waste|trash|recycl|sustain|plastic|compost|green/],["organize",/organiz|storage|clutter|locker|keep track|lost item|misplace/],["safety",/safe|secur|theft|protect|emergency|drunk/]]
   };
   ["customer","area","problem"].forEach(function(k){ INFER[k] = INFER[k].map(function(a){ return [a[0], new RegExp("\\b(?:" + a[1].source + ")", "i")]; }); });
